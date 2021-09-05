@@ -25,6 +25,6 @@ Spring boot app to explore celestial objects and celestial bodies. Data persiste
 
 ### Name
 - It was originally a play on words "stare decisis"(in law, 'determining points in litigation according to precedent.')
-- Stare(latin, pronounce starry) -> starry decisis
+- Stare(latin, pronounce stehr) -> starry (star-ie, meaning multiple stars. See : "The Starry Night" by Vincent van Gogh)
 - starry decisis -> star dec
 - star dec -> star Deck

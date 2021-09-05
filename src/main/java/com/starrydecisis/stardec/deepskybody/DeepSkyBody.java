@@ -1,5 +1,7 @@
 package com.starrydecisis.stardec.deepskybody;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
@@ -10,6 +12,9 @@ import javax.persistence.*;
 @Table
 @Document(indexName = "deepskybodyindex")
 public class DeepSkyBody {
+
+    private static final Logger logger = LoggerFactory.getLogger(DeepSkyBody.class);
+
     @Id
     @SequenceGenerator(
             name = "deepSkyBody_sequence",

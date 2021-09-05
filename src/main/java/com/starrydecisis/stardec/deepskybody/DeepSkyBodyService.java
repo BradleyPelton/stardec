@@ -1,21 +1,20 @@
 package com.starrydecisis.stardec.deepskybody;
 
 import com.starrydecisis.stardec.bodysearch.BodySearchRepository;
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.action.support.WriteRequest;
-import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class DeepSkyBodyService {
+
+    private static final Logger logger = LoggerFactory.getLogger(DeepSkyBodyService.class);
 
     private final DeepSkyBodyRepository deepSkyBodyRepository;
     private final BodySearchRepository bodySearchRepository;
@@ -43,26 +42,39 @@ public class DeepSkyBodyService {
             throw new IllegalStateException("body name already taken"); // TODO - Create custom exception
         }
         deepSkyBodyRepository.save(newBody);
-//            bodySearchRepository.save(newBody);
+        logger.info("deepSkyBody bodyName=" + newBody.getBodyName() + " created and persisted");
 
-        try {
-//            final CreateIndexRequest createIndexRequest = new CreateIndexRequest("deepskybodyindex");
-//        createIndexRequest.alias(new Alias("links").writeIndex(true));
-//            client.indices().create(createIndexRequest, RequestOptions.DEFAULT);
-//            client.index(createIndexRequest, RequestOptions.DEFAULT)
+        // AUTOMATING INDEXING
+        bodySearchRepository.save(newBody);
+        logger.info("deepSkyBody bodyName=" + newBody.getBodyName() + " indexed into Elasticsearch");
 
-            IndexRequest request = new IndexRequest("spring-data")
-                    .id(newBody.getId().toString())
-//                    .source(singletonMap("feature", "high-level-rest-client"))
-                    .setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
 
-            IndexResponse response = client.index(request,RequestOptions.DEFAULT);
-            System.out.println(response.status());
-            System.out.println(response.toString());
-        } catch (IOException e) {
-            System.out.println("IO EXCEPTION DURING addNewBody");
-            e.printStackTrace();
-        }
+        // MANUAL INDEXING
+//        try {
+////            final CreateIndexRequest createIndexRequest = new CreateIndexRequest("deepskybodyindex");
+////        createIndexRequest.alias(new Alias("links").writeIndex(true));
+////            client.indices().create(createIndexRequest, RequestOptions.DEFAULT);
+////            client.index(createIndexRequest, RequestOptions.DEFAULT)
+//
+//            Map<String, Object> jsonMap = new HashMap<>();
+//            jsonMap.put("feature", "high-level-rest-client");
+//            jsonMap.put("user", "kimchy");
+//            jsonMap.put("postDate", new Date());
+//            jsonMap.put("message", "trying out Elasticsearch");
+//
+//            IndexRequest request = new IndexRequest("spring-data")   // shardId
+////                    .id(String.valueOf(UUID.randomUUID()))           // id for index
+//                    .id(newBody.getId().toString())           // id for index
+//                    .source(jsonMap)                                //
+//                    .setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
+//
+//            IndexResponse response = client.index(request,RequestOptions.DEFAULT);
+////            System.out.println(response.status());
+////            System.out.println(response.toString());
+//        } catch (IOException e) {
+//            System.out.println("IO EXCEPTION DURING addNewBody");
+//            e.printStackTrace();
+//        }
     }
 
     public void deleteDeepSkyBody(Long bodyId) {
@@ -70,7 +82,9 @@ public class DeepSkyBodyService {
         if (!exists) {
             throw new IllegalStateException("cannot delete body with bodyId = " + bodyId + " , body id does not exist");
         } else {
-            deepSkyBodyRepository.deleteById(bodyId);
+            DeepSkyBody body = deepSkyBodyRepository.getById(bodyId);
+            deepSkyBodyRepository.delete(body);
+            bodySearchRepository.delete(body);  // UNTESTED, should flow through
         }
     }
 
@@ -85,6 +99,8 @@ public class DeepSkyBodyService {
             DeepSkyBody databaseBody = bodyOptional.get();
             databaseBody.setBodyName(apiBody.getBodyName());
             databaseBody.setBodyType(apiBody.getBodyType());
+
+            bodySearchRepository.save(databaseBody);  // UNTESTED, should flow through
         }
     }
 }
