@@ -1,11 +1,14 @@
 package com.starrydecisis.stardec.deepskybody;
 
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 
 @Entity
 @Table
+@Document(indexName = "deepskybodyindex")
 public class DeepSkyBody {
     @Id
     @SequenceGenerator(
@@ -19,12 +22,18 @@ public class DeepSkyBody {
     )
     private Long id;
 //    @Transient
-    private Timestamp ingestionDate;
+
+//    @Field(type = FieldType.Date, name = "ingestionDate")
+//    private Timestamp ingestionDate;
 //    private TimeStamp lastUpdated;  // TODO
 
+    @Field(type = FieldType.Text, name = "bodyName")
     private String bodyName;
+    @Field(type = FieldType.Text, name = "otherName")
     private String otherName;
+    @Field(type = FieldType.Text, name = "bodyType")
     private String bodyType; // CONVERT TO ENUM
+    @Field(type = FieldType.Text, name = "constellation")
     private String constellation; // e.g. AND    .   Constellation in which the object is found in IAU forma
 
 
@@ -41,7 +50,7 @@ public class DeepSkyBody {
 
     // without id
     public DeepSkyBody(String bodyName, String otherName, String bodyType, String constellation) {
-        this.ingestionDate = new Timestamp(System.currentTimeMillis());  // TODO - BUG - INGESTION SHOULD BE TIMESTAMP, NOT DATESTAMP
+//        this.ingestionDate = new Timestamp(System.currentTimeMillis());  // TODO - BUG - INGESTION SHOULD BE TIMESTAMP, NOT DATESTAMP
 
         this.bodyName = bodyName;
         this.otherName = otherName;
@@ -56,7 +65,7 @@ public class DeepSkyBody {
                        String bodyType,
                        String constellation) {
         this.id = id;
-        this.ingestionDate = new Timestamp(System.currentTimeMillis());
+//        this.ingestionDate = new Timestamp(System.currentTimeMillis());
         this.bodyName = bodyName;
         this.otherName = otherName;
         this.bodyType = bodyType;
@@ -72,13 +81,13 @@ public class DeepSkyBody {
         this.id = id;
     }
 
-    public Timestamp getIngestionDate() {
-        return this.ingestionDate;
-    }
+//    public Timestamp getIngestionDate() {
+//        return this.ingestionDate;
+//    }
 
-    public void setIngestionDate(Timestamp ingestionDate) {
-        this.ingestionDate = ingestionDate;
-    }
+//    public void setIngestionDate(Timestamp ingestionDate) {
+//        this.ingestionDate = ingestionDate;
+//    }
 
     public String getBodyName() {
         return bodyName;
@@ -116,7 +125,7 @@ public class DeepSkyBody {
     public String toString() {
         return "DeepSkyBody{" +
                 "id=" + id +
-                ", ingestionDate=" + ingestionDate +
+//                ", ingestionDate=" + ingestionDate +
                 ", bodyName='" + bodyName + '\'' +
                 ", otherName='" + otherName + '\'' +
                 ", bodyType='" + bodyType + '\'' +
