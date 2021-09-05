@@ -1,13 +1,16 @@
 package com.starrydecisis.stardec.deepskybody;
 
+import com.starrydecisis.stardec.bodysearch.BodySearchRepository;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.support.WriteRequest;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
 
-import java.time.LocalDate;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,10 +18,15 @@ import java.util.Optional;
 public class DeepSkyBodyService {
 
     private final DeepSkyBodyRepository deepSkyBodyRepository;
+    private final BodySearchRepository bodySearchRepository;
 
     @Autowired
-    public DeepSkyBodyService(DeepSkyBodyRepository deepSkyBodyRepository) {
+    private RestHighLevelClient client;
+
+    @Autowired
+    public DeepSkyBodyService(DeepSkyBodyRepository deepSkyBodyRepository, BodySearchRepository bodySearchRepository) {
         this.deepSkyBodyRepository = deepSkyBodyRepository;
+        this.bodySearchRepository = bodySearchRepository;
     }
 
     public List<DeepSkyBody> getDeepSkyBodies() {
@@ -27,7 +35,7 @@ public class DeepSkyBodyService {
         return deepSkyBodyRepository.findAll();
     }
 
-    public void addNewBody(DeepSkyBody newBody) {
+    public void addNewBody(DeepSkyBody newBody){
         Optional<DeepSkyBody> bodyOptional =
                 deepSkyBodyRepository.findDeepSkyBodyByBodyName(newBody.getBodyName());
 
@@ -35,6 +43,26 @@ public class DeepSkyBodyService {
             throw new IllegalStateException("body name already taken"); // TODO - Create custom exception
         }
         deepSkyBodyRepository.save(newBody);
+//            bodySearchRepository.save(newBody);
+
+        try {
+//            final CreateIndexRequest createIndexRequest = new CreateIndexRequest("deepskybodyindex");
+//        createIndexRequest.alias(new Alias("links").writeIndex(true));
+//            client.indices().create(createIndexRequest, RequestOptions.DEFAULT);
+//            client.index(createIndexRequest, RequestOptions.DEFAULT)
+
+            IndexRequest request = new IndexRequest("spring-data")
+                    .id(newBody.getId().toString())
+//                    .source(singletonMap("feature", "high-level-rest-client"))
+                    .setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
+
+            IndexResponse response = client.index(request,RequestOptions.DEFAULT);
+            System.out.println(response.status());
+            System.out.println(response.toString());
+        } catch (IOException e) {
+            System.out.println("IO EXCEPTION DURING addNewBody");
+            e.printStackTrace();
+        }
     }
 
     public void deleteDeepSkyBody(Long bodyId) {

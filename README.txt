@@ -1,12 +1,7 @@
-
-
-
-
-
 ### EARLY STAGES OF DEVELOPMENT
 
 
-### ABOUT
+# ABOUT
 Spring boot app to explore celestial objects and celestial bodies. Data persistence with JPA/Hibernate, search functionality with Elasticsearch
 
 ### Technologies
@@ -18,6 +13,10 @@ Spring boot app to explore celestial objects and celestial bodies. Data persiste
 - Junit unittests
 - Maven
 - Cloud provider: AWS
+
+
+### TODO LIST
+- See TODO.txt
 
 
 ### DATA

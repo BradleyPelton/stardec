@@ -3,6 +3,14 @@
 
 
 
+
+- Login
+- Spring security
+- Dockerization
+
+
+
+### Major renaming
 # Celestial Body vs Celestial Object. Not the same thing.
 
 
