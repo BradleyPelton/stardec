@@ -1,4 +1,4 @@
-package com.starrydecisis.stardec.deepskybody;
+package com.starrydecisis.stardec;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

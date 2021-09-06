@@ -1,6 +1,8 @@
-package com.starrydecisis.stardec.deepskybody;
+package com.starrydecisis.stardec.service;
 
-import com.starrydecisis.stardec.bodysearch.BodySearchRepository;
+import com.starrydecisis.stardec.model.DeepSkyBody;
+import com.starrydecisis.stardec.repository.DeepSkyBodyRepository;
+import com.starrydecisis.stardec.repository.BodySearchRepository;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
