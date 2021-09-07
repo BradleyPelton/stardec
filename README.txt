@@ -34,3 +34,7 @@ Spring boot app to explore celestial objects and celestial bodies. Data persiste
 - Stare(latin, pronounce stehr) -> starry (star-ie, meaning multiple stars. See : "The Starry Night" by Vincent van Gogh)
 - starry decisis -> star dec
 - star dec -> star Deck
+
+
+### Useful links for later
+https://www.convertcsv.com/csv-to-sql.htm

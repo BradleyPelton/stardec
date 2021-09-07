@@ -3,6 +3,8 @@ package com.starrydecisis.stardec.controller;
 
 import com.starrydecisis.stardec.model.DeepSkyBody;
 import com.starrydecisis.stardec.service.DeepSkyBodyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,9 @@ import java.util.List;
 public class FrontendController {
     // THIS IS A "BACKEND" project.
     // THE FRONTEND IS ADDED FOR OBSERVERS WHO DON'T WANT TO READ THE API CONTRACT.
+
+    private static final Logger logger = LoggerFactory.getLogger(DeepSkyBodyController.class);
+
     @Autowired
     private DeepSkyBodyService deepSkyBodyService;
 
@@ -77,10 +82,18 @@ public class FrontendController {
         return "index";
     }
 
-    @GetMapping("/smartSearch/{id}")
+    @GetMapping("/smartSearch")
     public String deleteDeepSkyBody(@RequestParam("searchPhrase") String searchPhrase,
                                             Model model) {
-        deepSkyBodyService.deleteDeepSkyBodyById(id);
+        List<DeepSkyBody> searchResults = deepSkyBodyService.mainSearchDeepSkyBody(searchPhrase);
+
+        logger.info("searchResults for smartSearch has numberOfResults = " + searchResults.size());
+        logger.info("searchResults for smartSearch has numberOfResults = " + searchResults.size());
+        logger.info("searchResults for smartSearch has numberOfResults = " + searchResults.size());
+        logger.info("searchResults for smartSearch has numberOfResults = " + searchResults.size());
+        logger.info("searchResults for smartSearch has numberOfResults = " + searchResults.size());
+
+        model.addAttribute("bodyList", searchResults);
         return "body_search_results";
     }
 }

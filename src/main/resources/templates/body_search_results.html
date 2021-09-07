@@ -15,6 +15,52 @@
   <h2>Search Results</h2>
 
 
+  <table border="1" class = "table table-dark table-hover table-responsive-md">
+    <thead>
+    <tr>
+      <th>
+        <a th:href="@{'/page/' + ${currentPage} + '?sortField=bodyName&sortDir=' + ${reverseSortDir}}">
+          Body Name</a>
+      </th>
+      <th>
+        <a th:href="@{'/page/' + ${currentPage} + '?sortField=otherName&sortDir=' + ${reverseSortDir}}">
+          Other Name</a>
+      </th>
+      <th>
+        <a th:href="@{'/page/' + ${currentPage} + '?sortField=bodyType&sortDir=' + ${reverseSortDir}}">
+          Body Type</a>
+      </th>
+      <th>
+        <a th:href="@{'/page/' + ${currentPage} + '?sortField=constellation&sortDir=' + ${reverseSortDir}}">
+          Constellation Name</a>
+      </th>
+      <th>
+        <a th:href="@{'/page/' + ${currentPage} + '?sortField=description&sortDir=' + ${reverseSortDir}}">
+          Description</a>
+      </th>
+      <th>
+        <a th:href="@{'/page/' + ${currentPage} + '?sortField=notes&sortDir=' + ${reverseSortDir}}">
+          Notes</a>
+      </th>
+      <th> Actions </th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--        Iterate over the results with a forEach("th:each") -->
+    <tr th:each="deepSkyBody : ${bodyList}">
+      <td th:text="${deepSkyBody.bodyName}"></td>
+      <td th:text="${deepSkyBody.otherName}"></td>
+      <td th:text="${deepSkyBody.bodyType}"></td>
+      <td th:text="${deepSkyBody.constellation}"></td>
+      <td th:text="${deepSkyBody.description}"></td>
+      <td th:text="${deepSkyBody.notes}"></td>
+      <td> <a th:href="@{/showFormForUpdate/{id}(id=${deepSkyBody.id})}" class="btn btn-primary">Update</a>
+        <a th:href="@{/deleteDeepSkyBody/{id}(id=${deepSkyBody.id})}" class="btn btn-danger">Delete</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
   <hr>
 
   <a th:href = "@{/}"> Back to Deep Sky Body List</a>

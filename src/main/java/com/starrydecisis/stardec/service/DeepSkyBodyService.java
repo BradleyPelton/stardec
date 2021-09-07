@@ -141,17 +141,39 @@ public class DeepSkyBodyService {
 //        }
 //        }
 
-        final QueryBuilder positiveQuery = QueryBuilders.matchQuery("bodyName", searchPhrase);
-        final QueryBuilder negativeQuery = QueryBuilders.matchQuery("otherName", searchPhrase);  // todo CHANGE to description
+
+
+
+
+//        final QueryBuilder positiveQuery = QueryBuilders.matchQuery("body_name", searchPhrase);
+        final QueryBuilder positiveQuery = QueryBuilders.multiMatchQuery(searchPhrase, "body_name", "other_name", "body_type", "constellation","description", "notes");
+        final QueryBuilder negativeQuery = QueryBuilders.matchQuery("notes", searchPhrase);
         BoostingQueryBuilder boostingQuery = new BoostingQueryBuilder(positiveQuery, negativeQuery);
-        boostingQuery.negativeBoost(0.2f);
+        boostingQuery.negativeBoost(0.4f);
         boostingQuery.boost(0.2f);
 
         Query searchQuery = new NativeSearchQuery(boostingQuery);
         SearchHits<DeepSkyBody> bodies = elasticsearchRestTemplate.search(searchQuery, DeepSkyBody.class);
 
-        final List<DeepSkyBody> bodiesList = bodies.getSearchHits().stream().map(SearchHit::getContent).collect(Collectors.toList());
+
+        final List<DeepSkyBody> bodiesList = bodies.getSearchHits().stream().map(SearchHit::getContent).limit(10).collect(Collectors.toList());
+
         return bodiesList;
+
+
+
+
+
+        // FALLBACK CATCHALL TEST QUERY
+//        Query searchQuery = new NativeSearchQueryBuilder()
+//                .withFilter(regexpQuery("body_name", ".*.*"))
+//                .build();
+//        SearchHits<DeepSkyBody> results =
+//                elasticsearchRestTemplate.search(searchQuery, DeepSkyBody.class, IndexCoordinates.of("deepskybodyindex"));
+//
+//        final List<DeepSkyBody> bodiesList = results.getSearchHits().stream().map(SearchHit::getContent).collect(Collectors.toList());
+
+//        return bodiesList;
     }
 
 
