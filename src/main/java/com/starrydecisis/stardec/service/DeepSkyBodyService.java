@@ -1,17 +1,31 @@
 package com.starrydecisis.stardec.service;
 
 import com.starrydecisis.stardec.model.DeepSkyBody;
-import com.starrydecisis.stardec.repository.DeepSkyBodyRepository;
 import com.starrydecisis.stardec.repository.BodySearchRepository;
+import com.starrydecisis.stardec.repository.DeepSkyBodyRepository;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.BoostingQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.SearchHit;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
+import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DeepSkyBodyService {
@@ -24,10 +38,15 @@ public class DeepSkyBodyService {
     @Autowired
     private RestHighLevelClient client;
 
+    private final ElasticsearchOperations elasticsearchRestTemplate;
+
     @Autowired
-    public DeepSkyBodyService(DeepSkyBodyRepository deepSkyBodyRepository, BodySearchRepository bodySearchRepository) {
+    public DeepSkyBodyService(DeepSkyBodyRepository deepSkyBodyRepository,
+                              BodySearchRepository bodySearchRepository,
+                              ElasticsearchOperations elasticsearchRestTemplate) {
         this.deepSkyBodyRepository = deepSkyBodyRepository;
         this.bodySearchRepository = bodySearchRepository;
+        this.elasticsearchRestTemplate = elasticsearchRestTemplate;
     }
 
     public List<DeepSkyBody> getDeepSkyBodies() {
@@ -95,8 +114,8 @@ public class DeepSkyBodyService {
         Optional<DeepSkyBody> bodyOptional =
                 deepSkyBodyRepository.findDeepSkyBodyByBodyName(apiBody.getBodyName());
 
-        if (!bodyOptional.isPresent()) {
-            throw new IllegalStateException("cannot update body with bodyId = " + apiBody.getId() + " , body id does not exist");
+        if (bodyOptional.isEmpty()) {
+            throw new IllegalStateException("Cannot update body with bodyId = " + apiBody.getId() + " , body id does not exist");
         } else {
             DeepSkyBody databaseBody = bodyOptional.get();
             databaseBody.setBodyName(apiBody.getBodyName());
@@ -104,5 +123,79 @@ public class DeepSkyBodyService {
 
             bodySearchRepository.save(databaseBody);  // UNTESTED, should flow through
         }
+    }
+
+    public List<DeepSkyBody> mainSearchDeepSkyBody(
+            @RequestParam(name = "searchPhrase", required = true) final String searchPhrase) {
+        // The main search query for DeepSkyBodies is going to have to lower the relevance of the description field.
+        // The description field mentions neighboring stars/galaxies by name. I need to boost id and lower description
+
+        // PRIORITIZE NAME SEARCHES TO THE bodyName FIELD
+//        GET /deepskybodyindex/_search
+//        {"query": {
+//            "boosting": {
+//                "positive": {"match":{"bodyName":"?0"}},
+//                "negative": {"match":{"otherName":"?0"}},
+//                "negative_boost":0.2
+//            }
+//        }
+//        }
+
+        final QueryBuilder positiveQuery = QueryBuilders.matchQuery("bodyName", searchPhrase);
+        final QueryBuilder negativeQuery = QueryBuilders.matchQuery("otherName", searchPhrase);  // todo CHANGE to description
+        BoostingQueryBuilder boostingQuery = new BoostingQueryBuilder(positiveQuery, negativeQuery);
+        boostingQuery.negativeBoost(0.2f);
+        boostingQuery.boost(0.2f);
+
+        Query searchQuery = new NativeSearchQuery(boostingQuery);
+        SearchHits<DeepSkyBody> bodies = elasticsearchRestTemplate.search(searchQuery, DeepSkyBody.class);
+
+        final List<DeepSkyBody> bodiesList = bodies.getSearchHits().stream().map(SearchHit::getContent).collect(Collectors.toList());
+        return bodiesList;
+    }
+
+
+
+
+
+
+
+
+    /// THYMLELEAF STUFF BELOW
+    public void saveDeepSkyBody(DeepSkyBody deepSkyBody) {
+        deepSkyBodyRepository.save(deepSkyBody);
+    }
+
+    /// THYMLELEAF STUFF BELOW
+    public DeepSkyBody getDeepSkyBodyById(Long id) {
+        Optional<DeepSkyBody> optional = deepSkyBodyRepository.findById(id);
+        DeepSkyBody body = null;
+        if (optional.isPresent()) {
+            body = optional.get();
+        } else {
+            throw new RuntimeException("DeepSkyBody not found for id = " + id);
+        }
+        return body;
+    }
+    /// THYMLELEAF STUFF BELOW
+    public void deleteDeepSkyBodyById(Long id) {
+        Optional<DeepSkyBody> optional = deepSkyBodyRepository.findById(id);
+        DeepSkyBody body = null;
+        if (optional.isPresent()) {
+            body = optional.get();
+            deepSkyBodyRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("DeepSkyBody not found for id = " + id);
+        }
+    }
+
+    /// THYMLELEAF STUFF BELOW
+    public Page<DeepSkyBody> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+        Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
+                ? Sort.by(sortField).ascending()
+                : Sort.by(sortField).descending();
+
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        return deepSkyBodyRepository.findAll(pageable);
     }
 }

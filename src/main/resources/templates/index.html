@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:padding="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Star Dec</title>
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+</head>
+<body>
+
+<div class="container my-2">
+    <h1>Star Dec</h1>
+    <h6>
+        This is a "backend project" as you can probably tell from the CSS.
+        The frontend is added for observers who don't want to read the API contract.
+    </h6>
+    <!-- Place this tag where you want the button to render. -->
+
+    <div>
+        <a href="https://github.com/BradleyPelton/starDec" class="btn btn-primary">Github Repo Link</a>
+        <a class="github-button" href="https://github.com/BradleyPelton"
+           data-color-scheme="no-preference: dark; light: light; dark: dark;"
+           data-size="large" aria-label="Follow @BradleyPelton on GitHub">Follow @BradleyPelton</a>
+        <a class="github-button" href="https://github.com/BradleyPelton/stardec"
+           data-color-scheme="no-preference: dark; light: light; dark: dark;" data-icon="octicon-star"
+           data-size="large" aria-label="Star BradleyPelton/stardec on GitHub">Star</a>
+        <a class="github-button" href="https://github.com/BradleyPelton/stardec/fork"
+           data-color-scheme="no-preference: dark; light: light; dark: dark;"
+           data-icon="octicon-repo-forked" data-size="large" aria-label="Fork BradleyPelton/stardec on GitHub">Fork</a>
+    </div>
+
+    <hr style="width:50%;text-align:left;margin-left:0">
+    <hr style="width:50%;text-align:left;margin-left:0">
+    <hr style="width:50%;text-align:left;margin-left:0">
+
+    <h3>Smart search with Elasticsearch</h3>
+
+
+<!--    <form class="navbar-form navbar-left">-->
+<!--        <input type="text" class="form-control col-lg-8" placeholder="Search">-->
+<!--        <button type="button" class="btn btn-primary btn-lg">Search</button>-->
+<!--    </form>-->
+
+<!--    <form class="navbar-form navbar-left">-->
+<!--        <input type="text" class="form-control col-lg-8" placeholder="Search">-->
+<!--        <button type="button" class="btn btn-primary">-->
+<!--            <i class="fas fa-search"></i>-->
+<!--        </button>-->
+<!--    </form>-->
+
+    <div border="1" class="container-fluid">
+<!--        <form class="d-flex" action="#" th:action="@{/saveDeepSkyBody}" th:object="${deepSkyBody}"-->
+<!--              method="POST">>-->
+            <form class="d-flex">>
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-dark btn-outline-success" type="submit">Search</button>
+        </form>
+    </div>
+
+
+<!--     ORIGINAL SEARCH BAR-->
+<!--    <div border="1" class="container-fluid">-->
+<!--        <form class="d-flex">>-->
+<!--            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+<!--            <button class="btn btn-dark btn-outline-success" type="submit">Search</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+
+<!--    <form action="#" th:action="@{/saveDeepSkyBody}" th:object="${deepSkyBody}"-->
+<!--          method="POST">-->
+<!--        <input type="text" th:field="*{bodyName}"-->
+<!--               placeholder="Body Name" class="form-control mb-4 col-4">-->
+<!--        <button type="submit" class="btn btn-info col-2"> Save Deep Sky Body</button>-->
+<!--    </form>-->
+
+
+    <hr style="width:50%;text-align:left;margin-left:0">
+    <hr style="width:50%;text-align:left;margin-left:0">
+    <hr style="width:50%;text-align:left;margin-left:0">
+
+    <a th:href = "@{/showNewDeepSkyBodyForm}" class="btn btn-primary btn-sm mb-3"> Add DeepSkyBody </a>
+
+    <table border="1" class = "table table-dark table-hover table-responsive-md">
+        <thead>
+        <tr>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=bodyName&sortDir=' + ${reverseSortDir}}">
+                    Body Name</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=otherName&sortDir=' + ${reverseSortDir}}">
+                    Other Name</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=bodyType&sortDir=' + ${reverseSortDir}}">
+                    Body Type</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=constellation&sortDir=' + ${reverseSortDir}}">
+                    Constellation Name</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=description&sortDir=' + ${reverseSortDir}}">
+                    Description</a>
+            </th>
+            <th>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=notes&sortDir=' + ${reverseSortDir}}">
+                    Notes</a>
+            </th>
+            <th> Actions </th>
+        </tr>
+        </thead>
+        <tbody>
+<!--        Iterate over the results with a forEach("th:each") -->
+        <tr th:each="deepSkyBody : ${bodyList}">
+            <td th:text="${deepSkyBody.bodyName}"></td>
+            <td th:text="${deepSkyBody.otherName}"></td>
+            <td th:text="${deepSkyBody.bodyType}"></td>
+            <td th:text="${deepSkyBody.constellation}"></td>
+            <td th:text="${deepSkyBody.description}"></td>
+            <td th:text="${deepSkyBody.notes}"></td>
+            <td> <a th:href="@{/showFormForUpdate/{id}(id=${deepSkyBody.id})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/deleteDeepSkyBody/{id}(id=${deepSkyBody.id})}" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:if = "${totalPages > 1}">
+        <div class = "row col-sm-10">
+            <div class = "col-sm-2">
+                Total Rows: [[${totalItems}]]
+            </div>
+            <div class = "col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i && i < currentPage + 3 && i > currentPage - 3}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+            </div>
+
+            <div class = "col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
+                <span th:unless="${currentPage < totalPages}">Next</span>
+            </div>
+
+            <div class="col-sm-1">
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
+                <span th:unless="${currentPage < totalPages}">Last</span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

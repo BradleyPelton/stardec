@@ -1,27 +1,19 @@
 package com.starrydecisis.stardec.controller;
 
 import com.starrydecisis.stardec.model.DeepSkyBody;
-import com.starrydecisis.stardec.repository.DeepSkyBodyRepository;
 import com.starrydecisis.stardec.repository.BodySearchRepository;
+import com.starrydecisis.stardec.repository.DeepSkyBodyRepository;
 import com.starrydecisis.stardec.service.DeepSkyBodyService;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.index.query.BoostingQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
-import org.springframework.data.elasticsearch.core.SearchHit;
-import org.springframework.data.elasticsearch.core.SearchHits;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
-import org.springframework.data.elasticsearch.core.query.Query;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path="api/v1/DeepSkyBody")
@@ -78,9 +70,11 @@ public class DeepSkyBodyController {
     ///////////////////////////////////////
     ///// ElasticSearch endpoints
     ///////////////////////////////////////
+    // working
     @GetMapping("/reindexAll")
     public void reindexAllBodies() {
         // Newly created bodies are indexed in real time during creation, but this will reindex all the data from postgres
+        // TODO - Refactor to use Logstash for reindexing instead of manually reindexing within spring boot
         List<DeepSkyBody> allBodies = deepSkyBodyRepository.findAll();
         bodySearchRepository.saveAll(allBodies);
     }
@@ -105,33 +99,11 @@ public class DeepSkyBodyController {
     }
 
     @GetMapping("/smartSearch")
-    public List<DeepSkyBody> mainSearchDeepSkyBody(@RequestParam(name = "searchPhrase", required = true) final String searchPhrase) {
+    public List<DeepSkyBody> mainSearchDeepSkyBody(
+            @RequestParam(name = "searchPhrase", required = true) final String searchPhrase) {
         // The main search query for DeepSkyBodies is going to have to lower the relevance of the description field.
         // The description field mentions neighboring stars/galaxies by name. I need to boost id and lower description
-
-        // PRIORITIZE NAME SEARCHES TO THE bodyName FIELD
-//        GET /deepskybodyindex/_search
-//        {"query": {
-//            "boosting": {
-//                "positive": {"match":{"bodyName":"?0"}},
-//                "negative": {"match":{"otherName":"?0"}},
-//                "negative_boost":0.2
-//            }
-//        }
-//        }
-
-
-        final QueryBuilder positiveQuery = QueryBuilders.matchQuery("bodyName", searchPhrase);
-        final QueryBuilder negativeQuery = QueryBuilders.matchQuery("otherName", searchPhrase);  // todo CHANGE to description
-        BoostingQueryBuilder boostingQuery = new BoostingQueryBuilder(positiveQuery, negativeQuery);
-        boostingQuery.negativeBoost(0.2f);
-        boostingQuery.boost(0.2f);
-
-        Query searchQuery = new NativeSearchQuery(boostingQuery);
-        SearchHits<DeepSkyBody> bodies = elasticsearchRestTemplate.search(searchQuery, DeepSkyBody.class);
-
-        final List<DeepSkyBody> bodiesList = bodies.getSearchHits().stream().map(SearchHit::getContent).collect(Collectors.toList());
-        return bodiesList;
+        return deepSkyBodyService.mainSearchDeepSkyBody(searchPhrase);
     }
 
     // Manually use a "search" function? Seems excessive. maybe for projects with hundreds of unique queries it's handy.

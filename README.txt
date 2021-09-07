@@ -4,12 +4,18 @@
 # ABOUT
 Spring boot app to explore celestial objects and celestial bodies. Data persistence with JPA/Hibernate, search functionality with Elasticsearch
 
+### FRONTEND DISCLAIMER:
+- This is a "backend" project meant to show off advanced backend features like advanced relevancy searching.
+- The frontend is added for observers who can't be bothered to read the API contract.
+- The frontend is meant to be entirely simplistic and not meant to display HTML/CSS/Javascript prowess
+
 ### Technologies
 - Spring boot
 - Spring web for external API
 - Spring data & Hibernate for data persistence
 - Database = Postgres 13
 - Elasticsearch for indexing/searching  (v7.13.2)
+- Frontend = basic Thymeleaf(server-side java template engine) + boostrap
 - Junit unittests
 - Maven
 - Cloud provider: AWS
