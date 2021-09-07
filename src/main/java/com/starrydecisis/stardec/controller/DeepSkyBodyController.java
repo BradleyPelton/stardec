@@ -98,13 +98,14 @@ public class DeepSkyBodyController {
         return bodySearchRepository.dumbSearchDeepSkyBody(searchPhrase, PageRequest.of(0, 10));
     }
 
-    @GetMapping("/smartSearch")
-    public List<DeepSkyBody> mainSearchDeepSkyBody(
-            @RequestParam(name = "searchPhrase", required = true) final String searchPhrase) {
-        // The main search query for DeepSkyBodies is going to have to lower the relevance of the description field.
-        // The description field mentions neighboring stars/galaxies by name. I need to boost id and lower description
-        return deepSkyBodyService.mainSearchDeepSkyBody(searchPhrase);
-    }
+//    @GetMapping("/smartSearch")
+//    public List<DeepSkyBody> mainSearchDeepSkyBody(
+//            @RequestParam(name = "searchPhrase", required = true) final String searchPhrase) {
+//
+//        // The main search query for DeepSkyBodies is going to have to lower the relevance of the description field.
+//        // The description field mentions neighboring stars/galaxies by name. I need to boost id and lower description
+//        return deepSkyBodyService.mainSearchDeepSkyBody(searchPhrase);
+//    }
 
     // Manually use a "search" function? Seems excessive. maybe for projects with hundreds of unique queries it's handy.
 //    private List<DeepSkyBody> search(Query query) {

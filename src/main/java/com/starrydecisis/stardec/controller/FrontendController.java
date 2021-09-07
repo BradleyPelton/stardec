@@ -82,9 +82,9 @@ public class FrontendController {
         return "index";
     }
 
-    @GetMapping("/smartSearch")
-    public String deleteDeepSkyBody(@RequestParam("searchPhrase") String searchPhrase,
-                                            Model model) {
+    @PostMapping("/smartSearch")
+    public String deleteDeepSkyBody(String searchPhrase, Model model) {
+        logger.info("inside of postmapping, searchPhrase = " + searchPhrase);
         List<DeepSkyBody> searchResults = deepSkyBodyService.mainSearchDeepSkyBody(searchPhrase);
 
         logger.info("searchResults for smartSearch has numberOfResults = " + searchResults.size());
