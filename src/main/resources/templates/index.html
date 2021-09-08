@@ -15,6 +15,23 @@
 
 </head>
 <body>
+<header class="p-3 bg-dark text-white">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+            </a>
+
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+                <li><a href="#/showNewDeepSkyBodyForm" class="nav-link px-2 text-white">Add New Body</a></li>
+                <li><a href="#/showFormForUpdate/893" class="nav-link px-2 text-white">Update Body</a></li>
+            </ul>
+
+
+        </div>
+    </div>
+</header>
 
 <div class="container my-2">
     <h1>Star Dec</h1>
@@ -37,11 +54,17 @@
            data-icon="octicon-repo-forked" data-size="large" aria-label="Fork BradleyPelton/stardec on GitHub">Fork</a>
     </div>
 
-    <hr style="width:50%;text-align:left;margin-left:0">
-    <hr style="width:50%;text-align:left;margin-left:0">
-    <hr style="width:50%;text-align:left;margin-left:0">
+    <hr>
+    <hr>
+    <hr>
 
     <h3>Smart search with Elasticsearch</h3>
+    <h6>Try Searching for:</h6>
+    <ul>
+        <li>Andromeda</li>
+        <li>Polaris</li>
+        <li>Hercules</li>
+    </ul>
 
 
 <!--    <form class="navbar-form navbar-left">-->
@@ -85,9 +108,9 @@
 <!--        </div>-->
 
 
-    <hr style="width:50%;text-align:left;margin-left:0">
-    <hr style="width:50%;text-align:left;margin-left:0">
-    <hr style="width:50%;text-align:left;margin-left:0">
+    <hr>
+    <hr>
+    <hr>
 
     <a th:href = "@{/showNewDeepSkyBodyForm}" class="btn btn-primary btn-sm mb-3"> Add DeepSkyBody </a>
 
@@ -142,12 +165,20 @@
             <div class = "col-sm-2">
                 Total Rows: [[${totalItems}]]
             </div>
+
             <div class = "col-sm-1">
-					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-						<a th:if="${currentPage != i && i < currentPage + 3 && i > currentPage - 3}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					<span >
+						<a>[[${currentPage}]]</a>
 					</span>
             </div>
+
+<!--            BUGGY PAGE ICONS-->
+<!--            <div class = "col-sm-1">-->
+<!--					<span th:each="i: ${#numbers.sequence(1, totalPages)}">-->
+<!--						<a th:if="${currentPage != i && i < currentPage + 3 && i > currentPage - 3}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>-->
+<!--						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;-->
+<!--					</span>-->
+<!--            </div>-->
 
             <div class = "col-sm-1">
                 <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
@@ -161,5 +192,119 @@
         </div>
     </div>
 </div>
+
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-light text-muted">
+    <!-- Section: Social media -->
+    <section
+            class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
+    >
+        <!-- Left -->
+        <div class="me-5 d-none d-lg-block">
+            <span>Links</span>
+        </div>
+        <!-- Left -->
+
+        <!-- Right -->
+        <div>
+            <a href="https://www.linkedin.com/in/bradleypelton/" class="me-4 text-reset">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://github.com/bradleypelton" class="me-4 text-reset">
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+        <!-- Right -->
+    </section>
+    <!-- Section: Social media -->
+
+    <!-- Section: Links  -->
+    <section class="">
+        <div class="container text-center text-md-start mt-5">
+            <!-- Grid row -->
+            <div class="row mt-3">
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <!-- Content -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        <i class="fas fa-gem me-3"></i>Starry Decisis
+                    </h6>
+                    <p>
+                        Spring boot app to explore celestial objects and celestial bodies.
+                        Data persistence with JPA/Hibernate, search functionality with Elasticsearch
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Technologies
+                    </h6>
+                    <p>
+                        <a href="https://www.elastic.co/" class="text-reset">Elasticsearch</a>
+                    </p>
+                    <p>
+                        <a href="https://spring.io/projects/spring-boot" class="text-reset">Spring boot</a>
+                    </p>
+                    <p>
+                        <a href="https://www.postgresql.org/" class="text-reset">Postgresql</a>
+                    </p>
+                    <p>
+                        <a href="https://aws.amazon.com/" class="text-reset">AWS</a>
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Useful links
+                    </h6>
+                    <p>
+                        <a href="https://github.com/bradleypelton" class="text-reset">Github</a>
+                    </p>
+                    <p>
+                        <a href="https://www.linkedin.com/in/bradleypelton/" class="text-reset">Linkedin</a>
+                    </p>
+                    <p>
+                        <a href="https://leetcode.com/BradleyPelton/" class="text-reset">Leetcode</a>
+                    </p>
+                    <p>
+                        <a href="#!" class="text-reset">Help</a>
+                    </p>
+                </div>
+                <!-- Grid column -->
+
+                <!-- Grid column -->
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase fw-bold mb-4">
+                        Contact
+                    </h6>
+                    <p><i class="fas fa-home me-3"></i> New York, NY 10025, US</p>
+                    <p>
+                        <i class="fas fa-envelope me-3"></i>
+                        bradleypelton@gmail.com
+                    </p>
+                    <p><i class="fas fa-phone me-3"></i> (347)-832-1527 </p>
+                </div>
+                <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
+        </div>
+    </section>
+    <!-- Section: Links  -->
+
+    <!-- Copyright -->
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+        "We're made of star stuff. We are a way for the cosmos to know itself." - Carl Sagan
+    </div>
+    <!-- Copyright -->
+</footer>
+<!-- Footer -->
+
 </body>
 </html>
