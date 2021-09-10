@@ -1,8 +1,16 @@
 package com.starrydecisis.stardec.controller;
 
 
-import com.starrydecisis.stardec.model.DeepSkyBody;
-import com.starrydecisis.stardec.service.DeepSkyBodyService;
+import com.starrydecisis.stardec.model.*;
+import com.starrydecisis.stardec.model.immutableLookupTables.BodyName;
+import com.starrydecisis.stardec.model.immutableLookupTables.BodyType;
+import com.starrydecisis.stardec.model.immutableLookupTables.Constellation;
+import com.starrydecisis.stardec.model.immutableLookupTables.Description;
+import com.starrydecisis.stardec.service.*;
+import com.starrydecisis.stardec.service.immutableServices.BodyNameService;
+import com.starrydecisis.stardec.service.immutableServices.BodyTypeService;
+import com.starrydecisis.stardec.service.immutableServices.ConstellationService;
+import com.starrydecisis.stardec.service.immutableServices.DescriptionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +28,50 @@ public class FrontendController {
 
     private static final Logger logger = LoggerFactory.getLogger(DeepSkyBodyController.class);
 
+    // TODO - Collapse the smaller repository and services into a single service???
+    // TODO - I think it is best practice to have one repo per table though... conflicting best practices
     @Autowired
     private DeepSkyBodyService deepSkyBodyService;
-
+    @Autowired
+    private ConstellationService constellationService;
+    @Autowired
+    private BodyNameService bodyNameService;
+    @Autowired
+    private BodyTypeService bodyTypeService;
+    @Autowired
+    private DescriptionService descriptionService;
     // Home Page
     @GetMapping("/")
     public String viewHomePage(Model model) {
         return findPaginated(1, "bodyName", "asc", model);
+    }
+
+    @GetMapping("/constellations")
+    public String constellations(Model model) {
+        List<Constellation> allConstellationsList = constellationService.getAllConstellations();
+        model.addAttribute("allConstellations", allConstellationsList);
+        return "constellations";
+    }
+
+    @GetMapping("/bodyNames")
+    public String bodyNames(Model model) {
+        List<BodyName> allBodyNames = bodyNameService.getAllBodyNames();
+        model.addAttribute("allBodyNames", allBodyNames);
+        return "body_names";
+    }
+
+    @GetMapping("/bodyTypes")
+    public String bodyTypes(Model model) {
+        List<BodyType> allBodyTypes = bodyTypeService.getAllBodyTypes();
+        model.addAttribute("allBodyTypes", allBodyTypes);
+        return "body_types";
+    }
+
+    @GetMapping("/descriptions")
+    public String descriptions(Model model) {
+        List<Description> allDescriptions = descriptionService.getAllDescriptions();
+        model.addAttribute("allDescriptions", allDescriptions);
+        return "descriptions";
     }
 
     @GetMapping("/showNewDeepSkyBodyForm")

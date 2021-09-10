@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Deep Sky Body Search Results</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <h1>Deep Sky Body observatory</h1>
+    <hr>
+    <h2>Constellations</h2>
+
+
+    <table border="1" class = "table table-dark table-hover table-responsive-md">
+        <thead>
+        <tr>
+            <th>
+                <a>Abbreviation</a>
+            </th>
+            <th>
+                <a>Name</a>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--        Iterate over the results with a forEach("th:each") -->
+        <tr th:each="constellation : ${allConstellations}">
+            <td th:text="${constellation.abbreviation}"></td>
+            <td th:text="${constellation.name}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <a th:href = "@{/}"> Back to Deep Sky Body List</a>
+</div>
+</body>
+</html>

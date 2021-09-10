@@ -1,4 +1,4 @@
-package com.starrydecisis.stardec.model;
+package com.starrydecisis.stardec.model.immutableLookupTables;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +24,8 @@ public class Constellation {
     @NotNull
     @Field(type = FieldType.Text, name = "name")
     private String name;
+
+    public Constellation(){};
 
     public Constellation(String abbreviation, String name) {
         this.abbreviation = abbreviation;

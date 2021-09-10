@@ -1,4 +1,4 @@
-package com.starrydecisis.stardec.model;
+package com.starrydecisis.stardec.model.immutableLookupTables;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +25,8 @@ public class BodyType {
     @NotNull
     @Field(type = FieldType.Text, name = "type_name")
     private String typeName;
+
+    public BodyType() {};
 
     public BodyType(String abbreviation, String typeName) {
         this.abbreviation = abbreviation;

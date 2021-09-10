@@ -1,6 +1,16 @@
 
 
+# SEE THE (Sometimes) LIVE SITE
+- http://starrydecisis.com
+- http://starrydecisis.com
+- http://starrydecisis.com
+- http://starrydecisis.com
+- http://starrydecisis.com
 
+- 
+### NOTE
+- Elasticsearch likes to idle above 8Gb of ram, so I'm still messing around with AWS configurations.
+- The site most likely will be up at any given time, but 100% uptime won't be achieved for some time.
 
 
 # ABOUT
