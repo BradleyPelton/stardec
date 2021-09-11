@@ -2,8 +2,10 @@ package com.starrydecisis.stardec.controller;
 
 import com.starrydecisis.stardec.model.securitymodels.AuthenticationRequest;
 import com.starrydecisis.stardec.model.securitymodels.AuthenticationResponse;
-import com.starrydecisis.stardec.service.MyUserDetailsService;
+import com.starrydecisis.stardec.service.StarDecUserDetailsService;
 import com.starrydecisis.stardec.util.JwtUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthenticationController {
 
+    private static final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -25,10 +29,11 @@ public class AuthenticationController {
     private JwtUtil jwtTokenUtil;
 
     @Autowired
-    private MyUserDetailsService userDetailsService;
+    private StarDecUserDetailsService starDecUserDetailsService;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+        logger.info("/authenticate requested received with data= " + authenticationRequest.toString());
 
         try {
             authenticationManager.authenticate(
@@ -40,8 +45,10 @@ public class AuthenticationController {
         }
 
 
-        final UserDetails userDetails = userDetailsService
+        final UserDetails userDetails = starDecUserDetailsService
                 .loadUserByUsername(authenticationRequest.getUsername());
+
+        logger.info("StarDecUserDetails object created, userDetails= " + userDetails);
 
         final String jwt = jwtTokenUtil.generateToken(userDetails);
 

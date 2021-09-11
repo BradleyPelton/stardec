@@ -30,4 +30,12 @@ public class AuthenticationRequest implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "AuthenticationRequest{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

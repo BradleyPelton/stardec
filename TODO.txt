@@ -3,10 +3,13 @@
 
 
 
-
-- Login
-- Spring security
-- Dockerization
+- HTTPS SSL certificate (self signed)
+- Jenkins CI/CD
+- Docker/K8s
+- Elasticserach geosearch (nearest stars to me? interesting concept. custom distance function?)
+- Flyway database migrations
+- graphql
+- Mongo for different datasets?
 
 
 
