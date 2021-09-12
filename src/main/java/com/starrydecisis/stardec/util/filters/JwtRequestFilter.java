@@ -36,14 +36,34 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         logger.info("JwtRequestFilter.doFilterInternal() has started");
 
-        final String authorizationHeader = request.getHeader("Authorization");
+        // TODO - This is probably going to break once more cookies are added
+        // TODO - Refactor
+        final String authorizationHeader = request.getHeader("Cookie");
+        logger.info("cookie header = " + authorizationHeader);
+//        Cookie[] currentCookies = request.getCookies();
+//        String authorizationHeader  = null;
+//        if (!(currentCookies == null || currentCookies.length == 0)) {
+//            for (Cookie cookie : currentCookies) {
+//                logger.info(cookie.getName());
+//                if (cookie.getName() == "accessCookie") {
+//                    authorizationHeader = cookie.getValue();
+//                }
+//            }
+//        }
+        if (authorizationHeader == null) {
+            logger.info("NO AUTH COOKIE FOUND");
+        } else {
+            logger.info("AUTH COOKIE = " + authorizationHeader);
+        }
+
 
         String username = null;
         String jwt = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("accessCookie=Bearer ")) {
             logger.info("Valid Authorization Header found!");
-            jwt = authorizationHeader.substring(7);
+            jwt = authorizationHeader.substring(20);
+            logger.info("jwt set to " + jwt);
             username = jwtUtil.extractUsername(jwt);
         } else {
             logger.info("No Authorization Header found!");
