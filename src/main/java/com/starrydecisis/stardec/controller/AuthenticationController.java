@@ -32,7 +32,8 @@ public class AuthenticationController {
     private StarDecUserDetailsService starDecUserDetailsService;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
+    public ResponseEntity<?> createAuthenticationToken(
+            @RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         logger.info("/authenticate requested received with data= " + authenticationRequest.toString());
 
         try {

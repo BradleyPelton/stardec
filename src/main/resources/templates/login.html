@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Use jwt Login page</title>
+</head>
+<body>
+
+<h1>Login page</h1>
+
+<h2> DEFAULT USERNAME/PASSWORDS:</h2>
+<ol>
+  <li>admin/password</li>
+  <li>username/password</li>
+  <li>username/password</li>
+</ol>
+
+<div>
+  <input id="userName" name="userName" value="">
+</div>
+<div>
+  <input id="password" name="password" value="">
+</div>
+<div>
+  <input type="button" id="btnSave"  value="Sign in">
+</div>
+<script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.js"></script>
+<!--<script src="/jquery/1.11.3/jquery.cookie.js"></script>-->
+<script>
+    $(function() {
+        $("#btnSave").click(function () {
+            var username=$("#userName").val();
+            var password=$("#password").val();
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: "/authenticate",
+                contentType: "application/json;charset=UTF-8",
+                data:JSON.stringify({"username":username ,"password" : password}),
+                dataType: "json",
+                async: false,
+                error: function (request) {
+                    window.alert("Invalid Username/Password");
+                },
+                success: function (data) {
+                    //save token
+                    // TODO - Fix expiration
+                    document.cookie = "accessCookie=Bearer " + data.jwt + "; expires=Fri, 31 Dec 9999 23:59:59 GMT; SameSite=None; Secure";
+                    // $.cookie('name', 'value', { expires: 7 });
+                    // Cookies.set('accessCookie', data.jwt);
+                    // Cookies.set('accessToken', data.token);
+                    // localStorage.setItem("bob","builder");
+                    // localStorage.setItem("jwt",data.jwt);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

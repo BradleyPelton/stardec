@@ -27,22 +27,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(myUserDetailsService);
-//    }
-
-
-//    @Override
-//    @Bean
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(starDecUserDetailsService);
-//    }
-
-
     // Why is this necessary?
     // AuthenticationManagerBuilder and AuthenticationManager
     // Why is the builder not setting the bean for the AuthenticationManager?
+    // SEE https://stackoverflow.com/a/21639553/12220587
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
 //    @Bean
     @Override
@@ -58,6 +46,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+
+                // THYMELEAF LOGIN
+                .formLogin()
+                .loginPage("/login")
+                .failureUrl("/login-error.html")
+                .and()
+
+
                 // Options
                 .csrf().disable()
 
@@ -65,6 +61,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // PERMIT ALL
                 .antMatchers("/").permitAll()
+                .antMatchers("/api/**").permitAll()
+                .antMatchers("/page/**").permitAll()
+                .antMatchers("/login").permitAll()
                 .antMatchers("/authenticate").permitAll()
                 .antMatchers("/constellations").permitAll()
                 .antMatchers("/bodyNames").permitAll()
@@ -89,7 +88,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().and()
 
                 // stateless session to ensure we don't reuse user's session
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+                // THYMELEAF LOGOUT
+                .and()
+                .logout()
+                .logoutSuccessUrl("/index.html");
 
                 // Add a filter to validate the tokens with every request
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

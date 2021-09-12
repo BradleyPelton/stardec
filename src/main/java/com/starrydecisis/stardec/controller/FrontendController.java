@@ -46,6 +46,19 @@ public class FrontendController {
         return findPaginated(1, "bodyName", "asc", model);
     }
 
+    // Login form
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    // Login form with error
+    @RequestMapping("/login-error.html")
+    public String loginError(Model model) {
+        model.addAttribute("loginError", true);
+        return "login.html";
+    }
+
     @GetMapping("/constellations")
     public String constellations(Model model) {
         List<Constellation> allConstellationsList = constellationService.getAllConstellations();

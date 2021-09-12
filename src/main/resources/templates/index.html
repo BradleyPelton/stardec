@@ -11,6 +11,7 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.js"></script>
 
 
 </head>
@@ -120,8 +121,33 @@
     <hr>
     <hr>
     <hr>
-
-    <a th:href = "@{/showNewDeepSkyBodyForm}" class="btn btn-primary btn-sm mb-3"> Add DeepSkyBody </a>
+    <script>
+        const accessCookieVal = document.cookie.split('; ').find(row => row.startsWith('accessCookie=Bearer')).split('=')[1];
+        console.log("accessCookieVal set to = " + accessCookieVal);
+    </script>
+    <script>
+        $(function() {
+            $("#showNewDeepSkyBodyForm").click(function () {
+                $.ajax({
+                    cache: true,
+                    type: "GET",
+                    url: "/showNewDeepSkyBodyForm",
+                    contentType: "application/json;charset=UTF-8",
+                    dataType: "json",
+                    headers: {
+                        "Authorization": accessCookieVal
+                    },
+                    error: function (request) {
+                        console.log("Cannot /showNewDeepSkyBodyForm");
+                    },
+                    success: function (data) {
+                        console.log("showNewDeepSkyBodyForm shown successfully")
+                    }
+                });
+            });
+        });
+    </script>
+    <a href="/showNewDeepSkyBodyForm" id="showNewDeepSkyBodyForm" class="btn btn-primary btn-sm mb-3"> Add DeepSkyBody </a>
 
     <table border="1" class = "table table-dark table-hover table-responsive-md">
         <thead>
