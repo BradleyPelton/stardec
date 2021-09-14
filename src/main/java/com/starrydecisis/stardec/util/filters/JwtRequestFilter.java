@@ -36,42 +36,34 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         logger.info("JwtRequestFilter.doFilterInternal() has started");
 
-        // TODO - This is probably going to break once more cookies are added
-        // TODO - Refactor
-        final String authorizationHeader = request.getHeader("Cookie");
-        logger.info("cookie header = " + authorizationHeader);
-//        Cookie[] currentCookies = request.getCookies();
-//        String authorizationHeader  = null;
-//        if (!(currentCookies == null || currentCookies.length == 0)) {
-//            for (Cookie cookie : currentCookies) {
-//                logger.info(cookie.getName());
-//                if (cookie.getName() == "accessCookie") {
-//                    authorizationHeader = cookie.getValue();
-//                }
-//            }
-//        }
-        if (authorizationHeader == null) {
-            logger.info("NO AUTH COOKIE FOUND");
-        } else {
-            logger.info("AUTH COOKIE = " + authorizationHeader);
-        }
+        final String cookieHeader = request.getHeader("Cookie");
+        logger.info("cookie header = " + cookieHeader);
+        // EXAMPLE:
+//        Idea-3c20e728=4756e10b-cea8-4144-a301-b8bf6fd6c8b1; accessCookie=Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhIiwiZXhwIjoxNjMxNjY4NzIwLCJpYXQiOjE2MzE2MzI3MjB9.qKjXAcgsUJzhdL36cIHfvrfPbmxtNLtRU2nW5VvtlkE
 
+        String accessTokenCookieStr = null;
+        String[] cookieArr = cookieHeader == null ? new String[]{} : cookieHeader.split("; ");
+        for (String cookieStr : cookieArr) {
+            if (cookieStr.startsWith("accessCookie=Bearer ")) {
+                accessTokenCookieStr = request.getHeader("Cookie");
+                logger.info("AUTH COOKIE FOUND, accessTokenCookieStr= " + accessTokenCookieStr);
+            }
+        }
 
         String username = null;
         String jwt = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("accessCookie=Bearer ")) {
+        if (accessTokenCookieStr != null) {
             logger.info("Valid Authorization Header found!");
-            jwt = authorizationHeader.substring(20);
+            jwt = accessTokenCookieStr.substring(20);
             logger.info("jwt set to " + jwt);
             username = jwtUtil.extractUsername(jwt);
         } else {
-            logger.info("No Authorization Header found!");
+            logger.info("NO AUTH COOKIE FOUND");
         }
 
-
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            logger.info("Starting major if in doFilterInternal");
+            logger.info("Starting main userValidation logic in JwetRequestFilter if block");
 
             UserDetails userDetails = starDecUserDetailsService.loadUserByUsername(username);
 
@@ -86,5 +78,4 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
         chain.doFilter(request, response);
     }
-
 }

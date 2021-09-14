@@ -28,7 +28,7 @@
                 <li><a href="/constellations" class="nav-link px-2 text-white">Constellations</a></li>
                 <li><a href="/bodyNames" class="nav-link px-2 text-white">Body Names</a></li>
                 <li><a href="/bodyTypes" class="nav-link px-2 text-white">Body Types</a></li>
-                <li><a href="/bodyTypes" class="nav-link px-2 text-white">Descriptions</a></li>
+                <li><a href="/descriptions" class="nav-link px-2 text-white">Descriptions</a></li>
                 <li><a href="/showNewDeepSkyBodyForm" class="nav-link px-2 text-white">Add New Body</a></li>
 
 <!--                 TODO - HIDE THIS BUTTON WHEN USER IS LOGGED IN -->
@@ -44,15 +44,10 @@
     <h1>Star Dec</h1>
     <h5>What is Star Dec?</h5>
     <ul>
-        <li>Star Dec is a webapp for the cataloging and searching of stars, constellations, and various other deep sky bodies.</li>
-        <li>Find celestial bodies, celestial objects, and deep sky bodies by constellation, description, or technical catalogue designations.</li>
+        <li>Star Dec is a <a href="https://en.wikipedia.org/wiki/Star_catalogue">Star Catalogue</a></li>
+        <li>Search for stars, galaxies, celestial bodies, celestial objects, and other deep sky bodies by name/type/constellation/description.</li>
         <li>Check out the links below or in the footer for more information.</li>
     </ul>
-    <h5>DISCLAIMER:</h5>
-    <h6>
-        This is a "backend project" as you can probably tell from the CSS.
-        The frontend is added for observers who don't want to read the API contract.
-    </h6>
     <div>
         <a href="https://github.com/BradleyPelton/starDec" class="btn btn-primary">Github Repo Link</a>
         <a class="github-button" href="https://github.com/BradleyPelton"
@@ -67,11 +62,9 @@
     </div>
 
     <hr>
-    <hr>
-    <hr>
 
     <h3>Smart search with Elasticsearch</h3>
-    <h6>Try Searching for:</h6>
+    <h6>Try searching for:</h6>
     <ul>
         <li>Andromeda</li>
         <li>Polaris</li>
@@ -91,20 +84,11 @@
 <!--        </button>-->
 <!--    </form>-->
 
-<!--    DELETEMEBELOW-->
-<!--    <form action="#" th:action="@{/saveDeepSkyBody}" th:object="${deepSkyBody}"-->
-<!--          method="POST">-->
-<!--        <input type="text" th:field="*{bodyName}"-->
-<!--               placeholder="Body Name" class="form-control mb-4 col-4">-->
-
-<!--        <button type="submit" class="btn btn-info col-2"> Save Deep Sky Body</button>-->
-<!--    </form>-->
-
 
     <div border="1" class="container-fluid">
         <form action="#" th:action="@{/smartSearch/}" th:object="${searchPhrase}"
               method="POST">
-            <input type="text" name="searchPhrase">
+            <input type="text" name="searchPhrase" required>
             <input type="submit" value="Search">
             <!--            <button class="btn btn-dark btn-outline-success" type="submit">Search</button>-->
         </form>
@@ -120,8 +104,6 @@
 <!--        </div>-->
 
 
-    <hr>
-    <hr>
     <hr>
     <a href="/showNewDeepSkyBodyForm" id="showNewDeepSkyBodyForm" class="btn btn-primary btn-sm mb-3"> Add DeepSkyBody </a>
 
@@ -203,6 +185,12 @@
         </div>
     </div>
 </div>
+
+<h5>DISCLAIMER:</h5>
+<h6>
+    This is a "backend project" as you can probably tell from the CSS.
+    The frontend is added for observers who don't want to read the API contract.
+</h6>
 
 <!-- Footer -->
 <footer class="text-center text-lg-start bg-light text-muted">

@@ -1,5 +1,11 @@
 version: '1'
 
+### Spring profile flags are not recommended
+### According to the 12 factor app standard, env variables should be defined on the machine not in a project file
+
+### TODO - Hide ports with env variables??? seems excessive
+
+
 services:
 
 
@@ -7,30 +13,43 @@ services:
     image: 'bradleypelton/starfirst:latest'
     build:
       context: .
+    ports:
+      - "80:8080"
+#      - "443:8080"
     container_name: app
     depends_on:
       - db
       - elasticsearch
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/compose-postgres
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=password
-#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - starDecElasticUrl=localhost:9200
-      - starDecJwtSecretKey=FAKEKEY
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/${starDecPostgresMainDbName}
+      - SPRING_DATASOURCE_USERNAME=${starDecPostgresUsername}
+      - SPRING_DATASOURCE_PASSWORD=${starDecPostgresPassword}
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+      - starDecElasticUrl=elasticsearch:9200
+      - starDecJwtSecretKey=${starDecJwtSecretKey}
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/starpostgresdb
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=password
+##      - SPRING_JPA_HIBERNATE_DDL_AUTO=validate
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=create-drop
+##      - starDecElasticUrl=localhost:9200
+#      - starDecElasticUrl=elasticsearch:9200
+#      - starDecJwtSecretKey=FAKEKEY
     networks:
       - starnet
 
-
-
-
-
   db:
-    image: 'postgres:13.1-alpine'
+    image: 'postgres:13'
+#    volumes:
+#      - postgres_data:/var/lib/postgresl/data/
     container_name: db
+    ports:
+      - "5432:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=${starDecPostgresMainDbName}
+      - POSTGRES_USER=${starDecPostgresUsername}
+      - POSTGRES_PASSWORD=${starDecPostgresPassword}
     networks:
       - starnet
 
@@ -53,12 +72,16 @@ services:
       memlock:
         soft: -1
         hard: -1
-    volumes:
-      - esdata1:/usr/share/elasticsearch/data
+#    volumes:
+#      - esdata1:/usr/share/elasticsearch/data
     ports:
-      - 9300:9300
-      - 9200:9200
+      - "9300:9300"
+#      - "9200:9200"
     networks:
       - starnet
+
+
+
+
 networks:
   starnet:

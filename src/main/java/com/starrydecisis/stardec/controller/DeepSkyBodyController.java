@@ -54,6 +54,7 @@ public class DeepSkyBodyController {
     @PostMapping
     public void createNewDeepSkyBody(@RequestBody DeepSkyBody deepSkyBody) {
         deepSkyBodyService.addNewBody(deepSkyBody);
+
     }
 
     @DeleteMapping(path = "{bodyId}")

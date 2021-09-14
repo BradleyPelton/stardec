@@ -2,13 +2,13 @@
 
 
 
-
 - HTTPS SSL certificate (self signed)
 - Signup flow
 - Forgot password flow
 - Header and Footer universalized across all of the pages. Use thymeleaf     <div th:replace="fragments/header :: header-css"/> ( see https://mkyong.com/spring-boot/spring-boot-spring-security-thymeleaf-example/ )
 - Jenkins CI/CD
-- Docker/K8s
+- K8s
+- Switch to using volumes just in case docker host goes down
 - Elasticserach geosearch (nearest stars to me? interesting concept. custom distance function?)
 - Flyway database migrations
 - graphql

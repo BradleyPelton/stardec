@@ -97,8 +97,11 @@ public class FrontendController {
 
     @PostMapping("/saveDeepSkyBody")
     public String saveDeepSkyBody(@ModelAttribute("deepSkyBody") DeepSkyBody deepSkyBody) {
-        // save employee to database
-        deepSkyBodyService.saveDeepSkyBody(deepSkyBody);
+
+        // Save is calling add.
+        // Refactor? I think this might be optimal but I keep convincing myself something is off here.
+
+        deepSkyBodyService.addNewBody(deepSkyBody);
         return "redirect:/";
     }
 

@@ -21,7 +21,7 @@
         <li><a href="/constellations" class="nav-link px-2 text-white">Constellations</a></li>
         <li><a href="/bodyNames" class="nav-link px-2 text-white">Body Names</a></li>
         <li><a href="/bodyTypes" class="nav-link px-2 text-white">Body Types</a></li>
-        <li><a href="/bodyTypes" class="nav-link px-2 text-white">Descriptions</a></li>
+        <li><a href="/descriptions" class="nav-link px-2 text-white">Descriptions</a></li>
         <li><a href="/showNewDeepSkyBodyForm" class="nav-link px-2 text-white">Add New Body</a></li>
 
         <!--                 TODO - HIDE THIS BUTTON WHEN USER IS LOGGED IN -->
@@ -40,17 +40,17 @@
   <form action="#" th:action="@{/saveDeepSkyBody}" th:object="${deepSkyBody}"
         method="POST">
     <input type="text" th:field="*{bodyName}"
-           placeholder="Body Name" class="form-control mb-4 col-4">
+           placeholder="Body Name" class="form-control mb-4 col-4" required>
     <input type="text" th:field="*{otherName}"
-           placeholder="Other name" class="form-control mb-4 col-4">
+           placeholder="Other name" class="form-control mb-4 col-4" required>
     <input type="text" th:field="*{bodyType}"
-           placeholder="Body Type" class="form-control mb-4 col-4">
+           placeholder="Body Type" class="form-control mb-4 col-4" required>
     <input type="text" th:field="*{constellation}"
-           placeholder="Constellation Name" class="form-control mb-4 col-4">
+           placeholder="Constellation Name" class="form-control mb-4 col-4" required>
     <input type="text" th:field="*{description}"
-           placeholder="Description" class="form-control mb-4 col-4">
+           placeholder="Description" class="form-control mb-4 col-4" required>
     <input type="text" th:field="*{notes}"
-           placeholder="Notes" class="form-control mb-4 col-4">
+           placeholder="Notes" class="form-control mb-4 col-4" required>
 
     <button type="submit" class="btn btn-info col-2"> Save Deep Sky Body</button>
   </form>

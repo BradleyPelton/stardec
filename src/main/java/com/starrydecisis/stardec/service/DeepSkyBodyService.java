@@ -65,7 +65,7 @@ public class DeepSkyBodyService {
         deepSkyBodyRepository.save(newBody);
         logger.info("deepSkyBody bodyName=" + newBody.getBodyName() + " created and persisted");
 
-        // AUTOMATING INDEXING
+        // automatically indexing new data
         bodySearchRepository.save(newBody);
         logger.info("deepSkyBody bodyName=" + newBody.getBodyName() + " indexed into Elasticsearch");
 
@@ -183,10 +183,15 @@ public class DeepSkyBodyService {
 
 
 
-    /// THYMLELEAF STUFF BELOW
-    public void saveDeepSkyBody(DeepSkyBody deepSkyBody) {
-        deepSkyBodyRepository.save(deepSkyBody);
-    }
+//    /// THYMLELEAF STUFF BELOW
+//    public void saveDeepSkyBody(DeepSkyBody deepSkyBody) {
+//
+//        // TODO -  DUPLICATE OF addNewBody method?
+//        // Should the frontend have its own method?
+//
+//        deepSkyBodyRepository.save(deepSkyBody);
+//        bodySearchRepository.save(deepSkyBody);
+//    }
 
     /// THYMLELEAF STUFF BELOW
     public DeepSkyBody getDeepSkyBodyById(Long id) {
