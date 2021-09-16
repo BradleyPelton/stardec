@@ -1,15 +1,11 @@
 
+# STAR DEC
+[![Docker Pulls](https://img.shields.io/docker/pulls/bradleypelton/starfirst)](https://hub.docker.com/repository/docker/bradleypelton/starfirst/general)
+[![Docker Image Size](https://img.shields.io/docker/image-size/bradleypelton/starfirst?sort=date)](https://hub.docker.com/repository/docker/bradleypelton/starfirst/general)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# SEE THE (Sometimes) LIVE SITE
-- http://starrydecisis.com
-- http://starrydecisis.com
-- http://starrydecisis.com
-- http://starrydecisis.com
-- http://starrydecisis.com
 
-- 
-
-# ABOUT
+### ABOUT
 Spring boot app to explore celestial objects and celestial bodies. Data persistence with JPA/Hibernate, search functionality with Elasticsearch
 
 ### Features
@@ -17,11 +13,6 @@ Spring boot app to explore celestial objects and celestial bodies. Data persiste
 - Containerized (see docker-compose.yml)
 - Real-time indexing of new data, persistence with Postgres database
 - Login/JWT Authentication with Spring Security
-
-### FRONTEND DISCLAIMER:
-- This is a "backend" project meant to show off advanced backend features like advanced relevancy searching.
-- The frontend is added for observers who can't be bothered to read the API contract.
-- The frontend is meant to be entirely simplistic and not meant to display HTML/CSS/Javascript prowess
 
 ### Technologies
 - Spring boot
@@ -35,6 +26,11 @@ Spring boot app to explore celestial objects and celestial bodies. Data persiste
 - Maven
 - Cloud provider: AWS
 
+
+### FRONTEND DISCLAIMER:
+- This is a "backend" project meant to show off advanced backend features like advanced relevancy searching.
+- The frontend is added for observers who can't be bothered to read the API contract.
+- The frontend is meant to be entirely simplistic and not meant to display HTML/CSS/Javascript prowess
 
 ### TODO LIST
 - See TODO.txt
