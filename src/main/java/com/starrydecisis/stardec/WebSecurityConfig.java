@@ -10,14 +10,18 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@EnableWebSecurity
+//@EnableWebSecurity
+// TODO - Disabling Web Security. Delete SecurityConfiguration.java after reenabling
+// TODO - Disabling Web Security. Delete SecurityConfiguration.java after reenabling
+// TODO - Disabling Web Security. Delete SecurityConfiguration.java after reenabling
+// TODO - Disabling Web Security. Delete SecurityConfiguration.java after reenabling
+// TODO - Disabling Web Security. Delete SecurityConfiguration.java after reenabling
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final Logger logger = LoggerFactory.getLogger(WebSecurityConfig.class);
