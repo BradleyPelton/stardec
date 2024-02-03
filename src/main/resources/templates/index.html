@@ -15,7 +15,11 @@
 
 
 </head>
-<body>
+<body
+        th:style="'background-image:url(' + @{/images/pillarsHuge.jpg} + ');
+ background-repeat: no-repeat, repeat;
+  background-size: auto;
+  '">
 <header class="p-3 bg-dark text-white">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -40,37 +44,19 @@
     </div>
 </header>
 
-<div class="container my-2">
+<div class="container my-2" style="background-color:white;" >
     <h1>Star Dec</h1>
     <h5>What is Star Dec?</h5>
     <ul>
         <li>Star Dec is a <a href="https://en.wikipedia.org/wiki/Star_catalogue">Star Catalogue</a></li>
-        <li>Search for stars, galaxies, celestial bodies, celestial objects, and other deep sky bodies by name/type/constellation/description.</li>
-        <li>Check out the links below or in the footer for more information.</li>
+        <li>Search for existing DSO's(deep-sky object) by name/type/constellation/description.</li>
+        <li>Add new DSO's</li>
+        <li>Update existing DSO's</li>
     </ul>
-    <div>
-        <a href="https://github.com/BradleyPelton/starDec" class="btn btn-primary">Github Repo Link</a>
-        <a class="github-button" href="https://github.com/BradleyPelton"
-           data-color-scheme="no-preference: dark; light: light; dark: dark;"
-           data-size="large" aria-label="Follow @BradleyPelton on GitHub">Follow @BradleyPelton</a>
-        <a class="github-button" href="https://github.com/BradleyPelton/stardec"
-           data-color-scheme="no-preference: dark; light: light; dark: dark;" data-icon="octicon-star"
-           data-size="large" aria-label="Star BradleyPelton/stardec on GitHub">Star</a>
-        <a class="github-button" href="https://github.com/BradleyPelton/stardec/fork"
-           data-color-scheme="no-preference: dark; light: light; dark: dark;"
-           data-icon="octicon-repo-forked" data-size="large" aria-label="Fork BradleyPelton/stardec on GitHub">Fork</a>
-    </div>
-
     <hr>
 
-    <h3>Smart search with Elasticsearch</h3>
-    <h6>Try searching for:</h6>
-    <ul>
-        <li>Andromeda</li>
-        <li>Polaris</li>
-        <li>Hercules</li>
-    </ul>
-
+    <h3>"Smart search"/Full-text Search with Elasticsearch</h3>
+    <p>Try searching for Android, Polaris, Hercules, 3C 249.1, etc.</p>
 
 <!--    <form class="navbar-form navbar-left">-->
 <!--        <input type="text" class="form-control col-lg-8" placeholder="Search">-->
@@ -105,6 +91,7 @@
 
 
     <hr>
+    <h2> Deep Sky Bodies </h2>
     <a href="/showNewDeepSkyBodyForm" id="showNewDeepSkyBodyForm" class="btn btn-primary btn-sm mb-3"> Add DeepSkyBody </a>
 
     <table border="1" class = "table table-dark table-hover table-responsive-md">
@@ -186,14 +173,8 @@
     </div>
 </div>
 
-<h5>DISCLAIMER:</h5>
-<h6>
-    This is a "backend project" as you can probably tell from the CSS.
-    The frontend is added for observers who don't want to read the API contract.
-</h6>
-
 <!-- Footer -->
-<footer class="text-center text-lg-start bg-light text-muted">
+<footer class="text-center text-lg-start bg-light text-muted" >
     <!-- Section: Social media -->
     <section
             class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"
@@ -201,6 +182,19 @@
         <!-- Left -->
         <div class="me-5 d-none d-lg-block">
             <span>Links</span>
+
+            <div>
+                <a href="https://github.com/BradleyPelton/starDec" class="btn btn-primary">Github Repo Link</a>
+                <a class="github-button" href="https://github.com/BradleyPelton"
+                   data-color-scheme="no-preference: dark; light: light; dark: dark;"
+                   data-size="large" aria-label="Follow @BradleyPelton on GitHub">Follow @BradleyPelton</a>
+                <a class="github-button" href="https://github.com/BradleyPelton/stardec"
+                   data-color-scheme="no-preference: dark; light: light; dark: dark;" data-icon="octicon-star"
+                   data-size="large" aria-label="Star BradleyPelton/stardec on GitHub">Star</a>
+                <a class="github-button" href="https://github.com/BradleyPelton/stardec/fork"
+                   data-color-scheme="no-preference: dark; light: light; dark: dark;"
+                   data-icon="octicon-repo-forked" data-size="large" aria-label="Fork BradleyPelton/stardec on GitHub">Fork</a>
+            </div>
         </div>
         <!-- Left -->
 
@@ -229,7 +223,7 @@
                         <i class="fas fa-gem me-3"></i>Starry Decisis
                     </h6>
                     <p>
-                        Spring boot app to explore celestial objects and celestial bodies.
+                        Spring Boot app to explore celestial objects and celestial bodies.
                         Data persistence with JPA/Hibernate, search functionality with Elasticsearch
                     </p>
                 </div>
@@ -242,10 +236,10 @@
                         Technologies
                     </h6>
                     <p>
-                        <a href="https://www.elastic.co/" class="text-reset">Elasticsearch</a>
+                        <a href="https://spring.io/projects/spring-boot" class="text-reset">Spring Boot</a>
                     </p>
                     <p>
-                        <a href="https://spring.io/projects/spring-boot" class="text-reset">Spring boot</a>
+                        <a href="https://www.elastic.co/" class="text-reset">Elasticsearch</a>
                     </p>
                     <p>
                         <a href="https://www.postgresql.org/" class="text-reset">Postgresql</a>
@@ -283,12 +277,12 @@
                     <h6 class="text-uppercase fw-bold mb-4">
                         Contact
                     </h6>
-                    <p><i class="fas fa-home me-3"></i> New York, NY 10025, US</p>
+                    <p><i class="fas fa-home me-3"></i> San Francisco, CA, 94118</p>
                     <p>
                         <i class="fas fa-envelope me-3"></i>
                         bradleypelton@gmail.com
                     </p>
-                    <p><i class="fas fa-phone me-3"></i> (347)-832-1527 </p>
+                    <p><i class="fas fa-phone me-3"></i> +1 (347)-832-1527 </p>
                 </div>
                 <!-- Grid column -->
             </div>

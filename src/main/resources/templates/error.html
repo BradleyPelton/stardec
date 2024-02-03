@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Error</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body
+th:style="'background-image:url(' + @{/images/pillarsLarge.jpg} + ');
+ background-repeat: no-repeat, repeat;
+  background-size: auto;
+  '">
+
+<div class="container" style="background-color:white;" >
+    <h1>An error has occurred...</h1>
+    <img th:src="@{/images/errorRedIcon2.PNG}" width="100px" height="100px" />
+    <p>Sorry we can't find that page with url = <span th:text="${path}"></span></p>
+
+    <a class="btn btn-primary btn-sm mb-3" href="/">Back to home</a>
+</div>
+
+<div class="container" style="background-color:white;">
+    <table>
+        <tr>
+            <td>Date</td>
+            <td th:text="${timestamp}"/>
+        </tr>
+        <tr>
+            <td>Path</td>
+            <td th:text="${path}"/>
+        </tr>
+        <tr>
+            <td>Error</td>
+            <td th:text="${error}"/>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td th:text="${status}"/>
+        </tr>
+        <tr>
+            <td>Message</td>
+            <td th:text="${message}"/>
+        </tr>
+        <tr>
+            <td>Exception</td>
+            <td th:text="${exception}"/>
+        </tr>
+        <tr>
+            <td>Trace</td>
+            <td>
+                <pre th:text="${trace}"/>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
