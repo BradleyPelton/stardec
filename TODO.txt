@@ -2,15 +2,16 @@
 
 
 
-###
+### TODO (current)
 - Zero Search Results text
--
+- /about page
+- Re-enable security
 
 
 
 
 
-
+### TODO (old)
 - HTTPS SSL certificate (self signed)
 - Signup flow
 - Forgot password flow
@@ -26,6 +27,8 @@
 
 
 ### Major renaming
+ RENAME DeepSkyBody
+
 # Celestial Body vs Celestial Object. Not the same thing.
 
 
@@ -35,6 +38,3 @@ astronomical body or celestial body is a single, tightly bound, contiguous entit
  while an astronomical or celestial object is a complex, less cohesively bound structure, which may consist of multiple bodies or even other objects with substructures.
 
 https://en.wikipedia.org/wiki/Astronomical_object
-
-
- RENAME DeepSkyBody
