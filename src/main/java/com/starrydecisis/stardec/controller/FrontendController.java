@@ -1,12 +1,12 @@
 package com.starrydecisis.stardec.controller;
 
 
-import com.starrydecisis.stardec.model.*;
+import com.starrydecisis.stardec.model.DeepSkyBody;
 import com.starrydecisis.stardec.model.immutableLookupTables.BodyName;
 import com.starrydecisis.stardec.model.immutableLookupTables.BodyType;
 import com.starrydecisis.stardec.model.immutableLookupTables.Constellation;
 import com.starrydecisis.stardec.model.immutableLookupTables.Description;
-import com.starrydecisis.stardec.service.*;
+import com.starrydecisis.stardec.service.DeepSkyBodyService;
 import com.starrydecisis.stardec.service.immutableServices.BodyNameService;
 import com.starrydecisis.stardec.service.immutableServices.BodyTypeService;
 import com.starrydecisis.stardec.service.immutableServices.ConstellationService;
@@ -17,7 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -95,13 +100,20 @@ public class FrontendController {
         return "new_body";
     }
 
-    @PostMapping("/saveDeepSkyBody")
-    public String saveDeepSkyBody(@ModelAttribute("deepSkyBody") DeepSkyBody deepSkyBody) {
-
-        // Save is calling add.
-        // Refactor? I think this might be optimal but I keep convincing myself something is off here.
-
+    @PostMapping("/addNewDeepSkyBody")
+    public String addNewDeepSkyBody(@ModelAttribute("deepSkyBody") DeepSkyBody deepSkyBody) {
         deepSkyBodyService.addNewBody(deepSkyBody);
+        // TODO - Update Elastic
+//        bodySearchService.save(deepSkyBody);
+        return "redirect:/";
+    }
+
+    @PostMapping("/updateExistingDeepSkyBody")
+    public String updateExistingDeepSkyBody(@ModelAttribute("deepSkyBody") DeepSkyBody deepSkyBody) {
+        deepSkyBodyService.updateDeepSkyBody(deepSkyBody);
+
+        // TODO - Update Elastic
+//        bodySearchRepository.save(deepSkyBody);
         return "redirect:/";
     }
 

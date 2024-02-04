@@ -2,13 +2,17 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="ISO-8859-1">
-  <title>Deep Sky Body Creation</title>
+  <title>Star Dec: Create Body</title>
   <link rel="stylesheet"
         href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
 </head>
-<body>
+<body
+        th:style="'background-image:url(' + @{/images/pillarsHuge.jpg} + ');
+ background-repeat: no-repeat, repeat;
+  background-size: auto;
+  '">
 <header class="p-3 bg-dark text-white">
   <div class="container">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -32,27 +36,27 @@
     </div>
   </div>
 </header>
-<div class="container">
-  <h1>Deep Sky Body observatory</h1>
+<div class="container" style="background-color:white;">
+  <h1>Deep Sky Body Creation</h1>
   <hr>
-  <h2>Save Deep Sky Body</h2>
+  <h2>Create Deep Sky Body</h2>
 
-  <form action="#" th:action="@{/saveDeepSkyBody}" th:object="${deepSkyBody}"
+  <form action="#" th:action="@{/addNewDeepSkyBody}" th:object="${deepSkyBody}"
         method="POST">
-    <input type="text" th:field="*{bodyName}"
-           placeholder="Body Name" class="form-control mb-4 col-4" required>
-    <input type="text" th:field="*{otherName}"
-           placeholder="Other name" class="form-control mb-4 col-4" required>
-    <input type="text" th:field="*{bodyType}"
-           placeholder="Body Type" class="form-control mb-4 col-4" required>
-    <input type="text" th:field="*{constellation}"
-           placeholder="Constellation Name" class="form-control mb-4 col-4" required>
-    <input type="text" th:field="*{description}"
-           placeholder="Description" class="form-control mb-4 col-4" required>
-    <input type="text" th:field="*{notes}"
-           placeholder="Notes" class="form-control mb-4 col-4" required>
+    <a>Body Name</a>
+    <input type="text" th:field="*{bodyName}" placeholder="Body Name" class="form-control mb-4 col-4" required>
+    <a>Other Name(optional)</a>
+    <input type="text" th:field="*{otherName}" placeholder="Other name" class="form-control mb-4 col-4">
+    <a>Body Type</a>
+    <input type="text" th:field="*{bodyType}" placeholder="Body Type" class="form-control mb-4 col-4" required>
+    <a>Constellation</a>
+    <input type="text" th:field="*{constellation}" placeholder="Constellation Name" class="form-control mb-4 col-4" required>
+    <a>Description(optional)</a>
+    <input type="text" th:field="*{description}" placeholder="Description" class="form-control mb-4 col-4">
+    <a>Notes(optional)</a>
+    <input type="text" th:field="*{notes}" placeholder="Notes" class="form-control mb-4 col-4">
 
-    <button type="submit" class="btn btn-info col-2"> Save Deep Sky Body</button>
+    <button type="submit" class="btn btn-primary btn-sm mb-3"> Save Deep Sky Body</button>
   </form>
 
   <hr>

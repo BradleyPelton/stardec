@@ -50,8 +50,6 @@ public class DeepSkyBodyService {
     }
 
     public List<DeepSkyBody> getDeepSkyBodies() {
-//        Long id = 0L;  // auto increment?
-//        LocalDate nowDate = LocalDate.now();
         return deepSkyBodyRepository.findAll();
     }
 
@@ -63,6 +61,10 @@ public class DeepSkyBodyService {
         } else {
             return deepSkyBodyRepository.findById(bodyId);
         }
+    }
+
+    public Optional<DeepSkyBody> getDeepSkyBodyByName(String bodyName) {
+        return deepSkyBodyRepository.findDeepSkyBodyByBodyName(bodyName);
     }
 
     public List<DeepSkyBody> getDeepSkyBodyConstellation(String constellation) {
@@ -83,9 +85,7 @@ public class DeepSkyBodyService {
         deepSkyBodyRepository.save(newBody);
         logger.info("deepSkyBody bodyName=" + newBody.getBodyName() + " created and persisted");
 
-        // automatically indexing new data
-        bodySearchRepository.save(newBody);
-        logger.info("deepSkyBody bodyName=" + newBody.getBodyName() + " indexed into Elasticsearch");
+        // TODO - Update Elasticsearch
 
 
         // MANUAL INDEXING
@@ -133,13 +133,24 @@ public class DeepSkyBodyService {
                 deepSkyBodyRepository.findDeepSkyBodyByBodyName(apiBody.getBodyName());
 
         if (bodyOptional.isEmpty()) {
-            throw new IllegalStateException("Cannot update body with bodyId = " + apiBody.getId() + " , body id does not exist");
+            throw new IllegalStateException("Cannot update body with bodyName = " + apiBody.getBodyName() + " , bodyName does not exist");
         } else {
-            DeepSkyBody databaseBody = bodyOptional.get();
-            databaseBody.setBodyName(apiBody.getBodyName());
-            databaseBody.setBodyType(apiBody.getBodyType());
 
-            bodySearchRepository.save(databaseBody);  // UNTESTED, should flow through
+            deepSkyBodyRepository.updateDeepSkyBodyByBodyName(
+                    apiBody.getBodyName(),
+                    apiBody.getOtherName(),
+                    apiBody.getBodyType(),
+                    apiBody.getConstellation(),
+                    apiBody.getDescription(),
+                    apiBody.getNotes()
+            );
+
+
+//            DeepSkyBody databaseBody = bodyOptional.get();
+//            databaseBody.setBodyName(apiBody.getBodyName());
+//            databaseBody.setBodyType(apiBody.getBodyType());
+//
+//            bodySearchRepository.save(databaseBody);  // UNTESTED, should flow through
         }
     }
 
