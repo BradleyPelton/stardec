@@ -14,6 +14,7 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path="api/v1/DeepSkyBody")
@@ -51,10 +52,31 @@ public class DeepSkyBodyController {
         return deepSkyBodyService.getDeepSkyBodies();
     }
 
+    @GetMapping(path = "{bodyId}")
+    public DeepSkyBody getDeepSkyBody(@PathVariable("bodyId") Long bodyId) {
+        Optional<DeepSkyBody> optionalBody = deepSkyBodyService.getDeepSkyBody(bodyId);
+        if (optionalBody.isEmpty()) {
+            throw new IllegalStateException("missing body getDeepSkyBody");
+        } else {
+            return optionalBody.get();
+        }
+    }
+
+    @GetMapping("/constellation")
+    public List<DeepSkyBody> getDeepSkyBodiesByConstellation(
+            @RequestParam("constellationName") String constellation) {
+        return deepSkyBodyService.getDeepSkyBodyConstellation(constellation);
+    }
+
+    @GetMapping("/bodyType")
+    public List<DeepSkyBody> getDeepSkyBodiesByBodyType(
+            @RequestParam("bodyType") String bodyType) {
+        return deepSkyBodyService.getDeepSkyBodyBodyType(bodyType);
+    }
+
     @PostMapping
     public void createNewDeepSkyBody(@RequestBody DeepSkyBody deepSkyBody) {
         deepSkyBodyService.addNewBody(deepSkyBody);
-
     }
 
     @DeleteMapping(path = "{bodyId}")

@@ -55,12 +55,30 @@ public class DeepSkyBodyService {
         return deepSkyBodyRepository.findAll();
     }
 
+    public Optional<DeepSkyBody> getDeepSkyBody(Long bodyId) {
+        boolean exists = deepSkyBodyRepository.existsById(bodyId);
+        if (!exists) {
+            logger.error("getDeepSkyBody invalid id, id = " + bodyId);
+            throw new IllegalArgumentException("getDeepSkyBody invalid id, id = " + bodyId); // TODO - I
+        } else {
+            return deepSkyBodyRepository.findById(bodyId);
+        }
+    }
+
+    public List<DeepSkyBody> getDeepSkyBodyConstellation(String constellation) {
+        return deepSkyBodyRepository.findDeepSkyBodiesByConstellation(constellation);
+    }
+
+    public List<DeepSkyBody> getDeepSkyBodyBodyType(String bodyType) {
+        return deepSkyBodyRepository.findDeepSkyBodiesByBodyType(bodyType);
+    }
+
     public void addNewBody(DeepSkyBody newBody){
         Optional<DeepSkyBody> bodyOptional =
                 deepSkyBodyRepository.findDeepSkyBodyByBodyName(newBody.getBodyName());
 
         if (bodyOptional.isPresent()) {
-            throw new IllegalStateException("body name already taken"); // TODO - Create custom exception
+            throw new IllegalArgumentException("body name already taken"); // TODO - Create custom exception
         }
         deepSkyBodyRepository.save(newBody);
         logger.info("deepSkyBody bodyName=" + newBody.getBodyName() + " created and persisted");

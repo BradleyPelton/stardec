@@ -7,7 +7,7 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout
                     disableAnsi="false"
-                    pattern="%d{DEFAULT} %highlight{%-5level}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=black, DEBUG=green bold, TRACE=blue} %logger{36}.%M() @%L - %msg%n "/>
+                    pattern="%d{DEFAULT} %highlight{%-5level}{FATAL=red blink, ERROR=red, WARN=yellow bold, INFO=white, DEBUG=green bold, TRACE=blue} %logger{36}.%M() @%L - %msg%n "/>
         </Console>
     </Appenders>
     <Loggers>

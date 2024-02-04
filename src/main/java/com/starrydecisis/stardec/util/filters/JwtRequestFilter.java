@@ -59,7 +59,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             logger.info("jwt set to " + jwt);
             username = jwtUtil.extractUsername(jwt);
         } else {
-            logger.info("NO AUTH COOKIE FOUND");
+            logger.error("NO AUTH COOKIE FOUND");
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {

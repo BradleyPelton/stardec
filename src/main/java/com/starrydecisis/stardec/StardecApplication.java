@@ -27,10 +27,13 @@ public class StardecApplication {
 		SpringApplication.run(StardecApplication.class, args);
 	}
 
+	/**
+	 * Log the current beans with log_level = DEBUG
+	 * Useful for debugging missing/misconfigured beans
+	 */
 	@Bean
 	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
 		return args -> {
-
 			logger.debug("================================================");
 			logger.debug("================================================");
 			logger.debug("================================================");
