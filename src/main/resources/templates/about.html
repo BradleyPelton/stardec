@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Star Dec: About</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body th:style="'background-image:url(' + @{/images/pillarsHuge.jpg} + ');background-size: auto;'">
+<header th:insert="header.html :: header"></header>
+<div class="container" style="background-color:white;">
+    <h1>Star Dec: About</h1>
+    <hr>
+    <h2>About</h2>
+    <p>Star Dec is a Web app Spring boot app to explore celestial objects and celestial bodies.</p>
+
+    <h4>Features</h4>
+    <ul>
+        <li>Full-text search with ElasticSearch</li>
+        <li>Containerized (see docker-compose.yml)</li>
+        <li>Real-time indexing of new data, persistence with Postgres database</li>
+        <li>Login/JWT Authentication with Spring Security</li>
+        <li>Real-time indexing of new data, persistence with Postgres database</li>
+    </ul>
+    <h4>Technologies</h4>
+    <ul>
+        <li>Spring boot</li>
+        <li>Spring web</li>
+        <li>Spring data & Hibernate for data persistence</li>
+        <li>Database = Postgres 13</li>
+        <li>Elasticsearch for indexing/searching (v7.13.2)</li>
+        <li>Frontend = basic Thymeleaf(server-side java template engine) + boostrap</li>
+        <li>Junit unittests</li>
+        <li>Maven</li>
+        <li>AWS Cloud</li>
+        <li>Spring Security</li>
+    </ul>
+
+    <p> For useful links and contact info, see the footer</p>
+</div>
+<footer th:insert="footer.html :: footer"></footer>
+</body>
+</html>

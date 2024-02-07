@@ -8,11 +8,8 @@
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
 </head>
-<body
-th:style="'background-image:url(' + @{/images/pillarsLarge.jpg} + ');
- background-repeat: no-repeat, repeat;
-  background-size: auto;
-  '">
+<body th:style="'background-image:url(' + @{/images/pillarsHuge.jpg} + ');background-size: auto;'">
+<header th:insert="header.html :: header"></header>
 
 <div class="container" style="background-color:white;" >
     <h1>An error has occurred...</h1>
@@ -56,6 +53,8 @@ th:style="'background-image:url(' + @{/images/pillarsLarge.jpg} + ');
         </tr>
     </table>
 </div>
+
+<footer th:insert="footer.html :: footer"></footer>
 
 </body>
 </html>

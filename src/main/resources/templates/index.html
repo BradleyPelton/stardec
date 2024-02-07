@@ -15,34 +15,8 @@
 
 
 </head>
-<body
-        th:style="'background-image:url(' + @{/images/pillarsHuge.jpg} + ');
- background-repeat: no-repeat, repeat;
-  background-size: auto;
-  '">
-<header class="p-3 bg-dark text-white">
-    <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
-            </a>
-
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
-                <li><a href="/constellations" class="nav-link px-2 text-white">Constellations</a></li>
-                <li><a href="/bodyNames" class="nav-link px-2 text-white">Body Names</a></li>
-                <li><a href="/bodyTypes" class="nav-link px-2 text-white">Body Types</a></li>
-                <li><a href="/descriptions" class="nav-link px-2 text-white">Descriptions</a></li>
-                <li><a href="/showNewDeepSkyBodyForm" class="nav-link px-2 text-white">Add New Body</a></li>
-
-<!--                 TODO - HIDE THIS BUTTON WHEN USER IS LOGGED IN -->
-                <li><a href="/login" class="btn btn-outline-light me-2">Login</a></li>
-            </ul>
-
-
-        </div>
-    </div>
-</header>
+<body th:style="'background-image:url(' + @{/images/pillarsHuge.jpg} + ');background-size: auto;'">
+<header th:insert="header.html :: header"></header>
 
 <div class="container my-2" style="background-color:white;" >
     <h1><b><u>Star Dec</u></b></h1>
@@ -62,19 +36,6 @@
         <li>Try searching for Android, Polaris, Hercules, 3C 249.1, etc.</li>
     </ul>
 
-<!--    <form class="navbar-form navbar-left">-->
-<!--        <input type="text" class="form-control col-lg-8" placeholder="Search">-->
-<!--        <button type="button" class="btn btn-primary btn-lg">Search</button>-->
-<!--    </form>-->
-
-<!--    <form class="navbar-form navbar-left">-->
-<!--        <input type="text" class="form-control col-lg-8" placeholder="Search">-->
-<!--        <button type="button" class="btn btn-primary">-->
-<!--            <i class="fas fa-search"></i>-->
-<!--        </button>-->
-<!--    </form>-->
-
-
     <div border="1" class="container-fluid">
         <form action="#" th:action="@{/smartSearch/}" th:object="${searchPhrase}"
               method="POST">
@@ -83,16 +44,6 @@
             <!--            <button class="btn btn-dark btn-outline-success" type="submit">Search</button>-->
         </form>
     </div>
-
-
-<!--     BACKUP-->
-<!--        <div border="1" class="container-fluid">-->
-<!--            <form class="d-flex">>-->
-<!--                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
-<!--                <button class="btn btn-dark btn-outline-success" type="submit">Search</button>-->
-<!--            </form>-->
-<!--        </div>-->
-
 
     <hr>
     <h2> <u>Deep Sky Bodies</u> </h2>
@@ -177,124 +128,6 @@
         </div>
     </div>
 </div>
-
-<!-- Footer -->
-<footer class="text-center text-lg-start bg-light text-muted" >
-    <!-- Section: Links  -->
-    <section class="">
-        <div class="container text-center text-md-start mt-5">
-            <!-- Grid row -->
-            <div class="row mt-3">
-                <!-- Grid column -->
-                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                    <!-- Content -->
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        <i class="fas fa-gem me-3"></i>Starry Decisis
-                    </h6>
-                    <p>
-                        Spring Boot app to explore celestial objects and celestial bodies.
-                        Data persistence with JPA/Hibernate, search functionality with Elasticsearch
-                    </p>
-                </div>
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-                    <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        Technologies
-                    </h6>
-                    <p>
-                        <a href="https://spring.io/projects/spring-boot" class="text-reset">Spring Boot</a>
-                    </p>
-                    <p>
-                        <a href="https://www.elastic.co/" class="text-reset">Elasticsearch</a>
-                    </p>
-                    <p>
-                        <a href="https://www.postgresql.org/" class="text-reset">Postgresql</a>
-                    </p>
-                    <p>
-                        <a href="https://aws.amazon.com/" class="text-reset">AWS</a>
-                    </p>
-                </div>
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                    <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        Github links
-                    </h6>
-                    <p>
-                        <a class="github-button" href="https://github.com/BradleyPelton/stardec"
-                           data-color-scheme="no-preference: dark; light: light; dark: dark;"
-                           data-size="large" aria-label="Follow @BradleyPelton on GitHub">Github Repo Link</a>
-                    </p>
-                    <p>
-                        <a class="github-button" href="https://github.com/BradleyPelton"
-                           data-color-scheme="no-preference: dark; light: light; dark: dark;"
-                           data-size="large" aria-label="Follow @BradleyPelton on GitHub">Follow @BradleyPelton</a>
-                    </p>
-                    <p>
-                        <a class="github-button" href="https://github.com/BradleyPelton/stardec"
-                           data-color-scheme="no-preference: dark; light: light; dark: dark;" data-icon="octicon-star"
-                           data-size="large" aria-label="Star BradleyPelton/stardec on GitHub">Star</a>
-                    </p>
-                    <p>
-                        <a class="github-button" href="https://github.com/BradleyPelton/stardec/fork"
-                           data-color-scheme="no-preference: dark; light: light; dark: dark;"
-                           data-icon="octicon-repo-forked" data-size="large" aria-label="Fork BradleyPelton/stardec on GitHub">Fork</a>
-                    </p>
-                </div>
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-                    <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        Useful links
-                    </h6>
-                    <p>
-                        <a href="https://www.linkedin.com/in/bradleypelton/" class="text-reset">Linkedin</a>
-                    </p>
-                    <p>
-                        <a href="https://github.com/bradleypelton" class="text-reset">Github</a>
-                    </p>
-                    <p>
-                        <a href="https://leetcode.com/BradleyPelton/" class="text-reset">Leetcode</a>
-                    </p>
-                    <p>
-                        <a href="/help" class="text-reset">Help</a>
-                    </p>
-                </div>
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                    <!-- Links -->
-                    <h6 class="text-uppercase fw-bold mb-4">
-                        Contact
-                    </h6>
-                    <p>
-                        <a href = "mailto: bradleypelton@gmail.com">bradleypelton@gmail.com</a>
-                    </p>
-                    <p><i class="fas fa-phone me-3"></i> +1 (347)-832-1527 </p>
-                    <p><i class="fas fa-home me-3"></i> San Francisco, CA, USA</p>
-                </div>
-                <!-- Grid column -->
-            </div>
-            <!-- Grid row -->
-        </div>
-    </section>
-    <!-- Section: Links  -->
-
-    <!-- Copyright -->
-    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-        "Astronomy compels the soul to look upwards and leads us from this world to another." - Plato
-    </div>
-    <!-- Copyright -->
-</footer>
-<!-- Footer -->
-
+<footer th:insert="footer.html :: footer"></footer>
 </body>
 </html>

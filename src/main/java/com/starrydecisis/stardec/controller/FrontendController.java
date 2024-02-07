@@ -64,6 +64,11 @@ public class FrontendController {
         return "login.html";
     }
 
+    @GetMapping("/about")
+    public String about(Model model) {
+        return "about.html";
+    }
+
     @GetMapping("/constellations")
     public String constellations(Model model) {
         List<Constellation> allConstellationsList = constellationService.getAllConstellations();
