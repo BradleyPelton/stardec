@@ -96,37 +96,34 @@
         </tbody>
     </table>
 
-    <div th:if = "${totalPages > 1}">
-        <div class = "row col-sm-10">
-            <div class = "col-sm-2">
-                Total Rows: [[${totalItems}]]
-            </div>
+    <!-- Page Buttons -->
+    <div class="container my-2" style="background-color:white;" >
+        <!-- First Page button -->
+        <div class = "col-sm-1">
+            <a  th:href="@{'/page/' + '1' + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">First</a>
+        </div>
 
-            <div class = "col-sm-1">
-					<span >
-						<a>[[${currentPage}]]</a>
-					</span>
-            </div>
-
-<!--            BUGGY PAGE ICONS-->
-<!--            <div class = "col-sm-1">-->
-<!--					<span th:each="i: ${#numbers.sequence(1, totalPages)}">-->
-<!--						<a th:if="${currentPage != i && i < currentPage + 3 && i > currentPage - 3}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>-->
-<!--						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;-->
-<!--					</span>-->
-<!--            </div>-->
-
-            <div class = "col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
-                <span th:unless="${currentPage < totalPages}">Next</span>
-            </div>
-
-            <div class="col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
-                <span th:unless="${currentPage < totalPages}">Last</span>
-            </div>
+        <ul>
+            <li th:if="${totalPages > 0}" class="pagination" th:each="pageNumberLoopVariable : ${pageNumbers}">
+                <a  th:if="${pageNumberLoopVariable == currentPageNumber}"
+                    th:text=${pageNumberLoopVariable}
+                >
+                </a>
+                <a  th:if="${ pageNumberLoopVariable != currentPageNumber
+                        && pageNumberLoopVariable < currentPageNumber + 3
+                        && pageNumberLoopVariable > currentPageNumber - 3}"
+                        th:href="@{'/page/' + ${pageNumberLoopVariable} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}"
+                        th:text=${pageNumberLoopVariable}>
+                </a>
+            </li>
+        </ul>
+        <!-- Last Page button -->
+        <div class = "col-sm-1">
+            <a  th:href="@{'/page/' + ${totalPages} + '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
         </div>
     </div>
+
+
 </div>
 <footer th:insert="footer.html :: footer"></footer>
 </body>

@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 public class FrontendController {
@@ -148,8 +150,20 @@ public class FrontendController {
         Page<DeepSkyBody> page = deepSkyBodyService.findPaginated(pageNo, pageSize, sortField, sortDir);
         List<DeepSkyBody> bodyList = page.getContent();
 
-        model.addAttribute("currentPage", pageNo);
+//        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("currentPageNumber", page.getNumber() + 1);
         model.addAttribute("totalPages", page.getTotalPages());
+
+        int totalPages = page.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(1, totalPages)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
+
         model.addAttribute("totalItems", page.getTotalElements());
 
         model.addAttribute("sortField", sortField);
