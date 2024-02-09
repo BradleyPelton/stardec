@@ -9,6 +9,10 @@
         crossorigin="anonymous">
   <!-- favicon -->
   <link rel="icon" type="image/x-icon" th:href="@{/images/favicon.ico}"/>
+
+  <!-- Place this tag in your head or just before your close body tag. -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.js"></script>
 </head>
 <body th:style="'background-image:url(' + @{/images/pillarsHuge.jpg} + ');background-size: auto;'">
 <header th:insert="header.html :: header"></header>
@@ -17,8 +21,11 @@
   <hr>
   <h2>Search Results</h2>
 
+  <div th:if="${bodyListSize == 0}" class="container" style="background-color:white;">
+    <p>No Search results found for "<a th:text=${searchPhraseString}></a>".</p>
+  </div>
 
-  <table border="1" class = "table table-dark table-hover table-responsive-md">
+  <table border="1" class = "table table-dark table-hover table-responsive-md" th:if="${bodyListSize > 0}" >
     <thead>
     <tr>
       <th>

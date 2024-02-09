@@ -175,7 +175,8 @@ public class FrontendController {
     }
 
     @PostMapping("/smartSearch")
-    public String deleteDeepSkyBody(String searchPhrase, Model model) {
+    public String smartSearchPostMapping(String searchPhrase, Model model) {
+        // TODO - Add ?searchPhrase URL parameter
         logger.info("inside of postmapping, searchPhrase = " + searchPhrase);
         List<DeepSkyBody> searchResults = deepSkyBodyService.mainSearchDeepSkyBody(searchPhrase);
 
@@ -185,7 +186,9 @@ public class FrontendController {
         logger.info("searchResults for smartSearch has numberOfResults = " + searchResults.size());
         logger.info("searchResults for smartSearch has numberOfResults = " + searchResults.size());
 
+        model.addAttribute("searchPhraseString", searchPhrase);
         model.addAttribute("bodyList", searchResults);
+        model.addAttribute("bodyListSize", searchResults.size());
         return "body_search_results";
     }
 }

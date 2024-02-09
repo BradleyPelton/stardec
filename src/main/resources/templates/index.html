@@ -14,8 +14,6 @@
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.js"></script>
-
-
 </head>
 <body th:style="'background-image:url(' + @{/images/pillarsHuge.jpg} + ');background-size: auto;'">
 <header th:insert="header.html :: header"></header>
@@ -48,27 +46,27 @@
         <thead>
         <tr>
             <th>
-                <a th:href="@{'/page/' + ${currentPage} + '?sortField=bodyName&sortDir=' + ${reverseSortDir}}">
+                <a th:href="@{'/page/1' + '?sortField=bodyName&sortDir=' + ${reverseSortDir}}">
                     Body Name</a>
             </th>
             <th>
-                <a th:href="@{'/page/' + ${currentPage} + '?sortField=otherName&sortDir=' + ${reverseSortDir}}">
+                <a th:href="@{'/page/1' + '?sortField=otherName&sortDir=' + ${reverseSortDir}}">
                     Other Name</a>
             </th>
             <th>
-                <a th:href="@{'/page/' + ${currentPage} + '?sortField=bodyType&sortDir=' + ${reverseSortDir}}">
+                <a th:href="@{'/page/1' + '?sortField=bodyType&sortDir=' + ${reverseSortDir}}">
                     Body Type</a>
             </th>
             <th>
-                <a th:href="@{'/page/' + ${currentPage} + '?sortField=constellation&sortDir=' + ${reverseSortDir}}">
+                <a th:href="@{'/page/1' + '?sortField=constellation&sortDir=' + ${reverseSortDir}}">
                     Constellation Name</a>
             </th>
             <th>
-                <a th:href="@{'/page/' + ${currentPage} + '?sortField=description&sortDir=' + ${reverseSortDir}}">
+                <a th:href="@{'/page/1' + '?sortField=description&sortDir=' + ${reverseSortDir}}">
                     Description</a>
             </th>
             <th>
-                <a th:href="@{'/page/' + ${currentPage} + '?sortField=notes&sortDir=' + ${reverseSortDir}}">
+                <a th:href="@{'/page/1' + '?sortField=notes&sortDir=' + ${reverseSortDir}}">
                     Notes</a>
             </th>
             <th> Actions </th>
