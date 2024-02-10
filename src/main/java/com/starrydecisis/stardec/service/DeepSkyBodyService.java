@@ -75,7 +75,7 @@ public class DeepSkyBodyService {
         return deepSkyBodyRepository.findDeepSkyBodiesByBodyType(bodyType);
     }
 
-    public void addNewBody(DeepSkyBody newBody){
+    public DeepSkyBody addNewBody(DeepSkyBody newBody){
         Optional<DeepSkyBody> bodyOptional =
                 deepSkyBodyRepository.findDeepSkyBodyByBodyName(newBody.getBodyName());
 
@@ -85,7 +85,7 @@ public class DeepSkyBodyService {
         deepSkyBodyRepository.save(newBody);
         logger.info("deepSkyBody bodyName=" + newBody.getBodyName() + " created and persisted");
 
-        bodySearchRepository.save(newBody);
+        return bodySearchRepository.save(newBody);
     }
 
     public void deleteDeepSkyBody(Long bodyId) {
@@ -100,15 +100,15 @@ public class DeepSkyBodyService {
     }
 
     @Transactional
-    public void updateDeepSkyBody(DeepSkyBody apiBody) {
-        Optional<DeepSkyBody> bodyOptional =
+    public DeepSkyBody updateDeepSkyBody(DeepSkyBody apiBody) {
+        Optional<DeepSkyBody> existingBody =
                 deepSkyBodyRepository.findDeepSkyBodyByBodyName(apiBody.getBodyName());
 
-        if (bodyOptional.isEmpty()) {
+        if (existingBody.isEmpty()) {
             throw new IllegalStateException("Cannot update body with bodyName = " + apiBody.getBodyName() + " , bodyName does not exist");
         } else {
-
             deepSkyBodyRepository.updateDeepSkyBodyByBodyName( // TODO - BUG. Update is creating a second document.
+                    existingBody.get().getId(),
                     apiBody.getBodyName(),
                     apiBody.getOtherName(),
                     apiBody.getBodyType(),
@@ -116,7 +116,7 @@ public class DeepSkyBodyService {
                     apiBody.getDescription(),
                     apiBody.getNotes()
             );
-            bodySearchRepository.save(apiBody);
+            return bodySearchRepository.save(existingBody.get());
         }
     }
 

@@ -34,10 +34,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
 
-        logger.info("JwtRequestFilter.doFilterInternal() has started");
+//        logger.info("JwtRequestFilter.doFilterInternal() has started");
 
         final String cookieHeader = request.getHeader("Cookie");
-        logger.info("cookie header = " + cookieHeader);
+//        logger.info("cookie header = " + cookieHeader);
         // EXAMPLE:
 //        Idea-3c20e728=4756e10b-cea8-4144-a301-b8bf6fd6c8b1; accessCookie=Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhIiwiZXhwIjoxNjMxNjY4NzIwLCJpYXQiOjE2MzE2MzI3MjB9.qKjXAcgsUJzhdL36cIHfvrfPbmxtNLtRU2nW5VvtlkE
 
@@ -46,7 +46,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         for (String cookieStr : cookieArr) {
             if (cookieStr.startsWith("accessCookie=Bearer ")) {
                 accessTokenCookieStr = request.getHeader("Cookie");
-                logger.info("AUTH COOKIE FOUND, accessTokenCookieStr= " + accessTokenCookieStr);
+//                logger.info("AUTH COOKIE FOUND, accessTokenCookieStr= " + accessTokenCookieStr);
             }
         }
 
@@ -54,16 +54,16 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String jwt = null;
 
         if (accessTokenCookieStr != null) {
-            logger.info("Valid Authorization Header found!");
+//            logger.info("Valid Authorization Header found!");
             jwt = accessTokenCookieStr.substring(20);
-            logger.info("jwt set to " + jwt);
+//            logger.info("jwt set to " + jwt);
             username = jwtUtil.extractUsername(jwt);
         } else {
-            logger.error("NO AUTH COOKIE FOUND");
+//            logger.error("NO AUTH COOKIE FOUND");
         }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            logger.info("Starting main userValidation logic in JwetRequestFilter if block");
+//            logger.info("Starting main userValidation logic in JwetRequestFilter if block");
 
             UserDetails userDetails = starDecUserDetailsService.loadUserByUsername(username);
 

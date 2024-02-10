@@ -39,7 +39,7 @@
 
     <hr>
     <h2> <u>Deep Sky Bodies</u> </h2>
-    <a href="/showNewDeepSkyBodyForm" id="showNewDeepSkyBodyForm" class="btn btn-primary btn-sm mb-3"> Add DeepSkyBody </a>
+    <a href="/newBody" id="newBody" class="btn btn-primary btn-sm mb-3"> Add DeepSkyBody </a>
     <a href="/"  class="btn btn-primary btn-sm mb-3"> Reset Filters </a>
 
     <table border="1" class = "table table-dark table-hover table-responsive-md">
@@ -81,7 +81,7 @@
             <td th:text="${deepSkyBody.constellation}"></td>
             <td th:text="${deepSkyBody.description}"></td>
             <td th:text="${deepSkyBody.notes}"></td>
-            <td> <a th:href="@{/showFormForUpdate/{id}(id=${deepSkyBody.id})}" class="btn btn-primary">Update</a>
+            <td> <a th:href="@{/updateBody/{id}(id=${deepSkyBody.id})}" class="btn btn-primary">Update</a>
                 <a th:href="@{/deleteDeepSkyBody/{id}(id=${deepSkyBody.id})}" class="btn btn-danger">Delete</a>
             </td>
         </tr>

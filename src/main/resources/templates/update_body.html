@@ -22,8 +22,13 @@
   <hr>
   <h2>Update Existing Deep Sky Body</h2>
 
-  <form action="#" th:action="@{/updateExistingDeepSkyBody}" th:object="${deepSkyBody}"
-        method="POST">
+  <form
+          onsubmit="alert('Deep Sky Body Created Successfully')"
+          action="#"
+          th:action="@{/updateExistingDeepSkyBody}"
+          th:object="${deepSkyBody}"
+          method="POST"
+  >
 
     <!-- Add hidden form field to handle update -->
     <input type="hidden" th:field="*{id}" />

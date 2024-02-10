@@ -77,9 +77,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // REQUIRES AUTH
 //                .antMatchers("/api/**")
-                .antMatchers("/showNewDeepSkyBodyForm").hasAnyRole("ADMIN","USER")
+                .antMatchers("/newBody").hasAnyRole("ADMIN","USER")
 //                .antMatchers("/deleteDeepSkyBody/{id}").hasAnyRole("ADMIN","USER")
-//                .antMatchers("/showFormForUpdate/{id}").hasAnyRole("ADMIN","USER")
+//                .antMatchers("/updateBody/{id}").hasAnyRole("ADMIN","USER")
 //                .antMatchers("/addNewBody").hasAnyRole("ADMIN","USER")
 
 

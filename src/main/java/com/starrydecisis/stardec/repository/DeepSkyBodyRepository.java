@@ -14,8 +14,9 @@ public interface DeepSkyBodyRepository extends JpaRepository<DeepSkyBody,Long> {
 
 
     @Modifying
-    @Query("update DeepSkyBody d set d.otherName = ?2 , d.bodyType = ?3 , d.constellation = ?4 , d.description = ?5 , d.notes = ?6  where d.bodyName = ?1")
-    void updateDeepSkyBodyByBodyName(String bodyName,
+    @Query("update DeepSkyBody d set d.otherName = ?3 , d.bodyType = ?4 , d.constellation = ?5 , d.description = ?6 , d.notes = ?7  where d.id = ?1 and d.bodyName = ?2")
+    void updateDeepSkyBodyByBodyName(Long bodyId,
+                                     String bodyName,
                                      String otherName,
                                      String bodyType,
                                      String constellation,

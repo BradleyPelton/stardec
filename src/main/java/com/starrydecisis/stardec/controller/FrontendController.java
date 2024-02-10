@@ -99,8 +99,8 @@ public class FrontendController {
         return "descriptions";
     }
 
-    @GetMapping("/showNewDeepSkyBodyForm")
-    public String showNewDeepSkyBodyForm(Model model) {
+    @GetMapping("/newBody")
+    public String newBody(Model model) {
         // create model attribute to bind form data
         DeepSkyBody deepSkyBody = new DeepSkyBody();
         model.addAttribute("deepSkyBody", deepSkyBody);
@@ -109,23 +109,18 @@ public class FrontendController {
 
     @PostMapping("/addNewDeepSkyBody")
     public String addNewDeepSkyBody(@ModelAttribute("deepSkyBody") DeepSkyBody deepSkyBody) {
-        deepSkyBodyService.addNewBody(deepSkyBody);
-        // TODO - Update Elastic
-//        bodySearchService.save(deepSkyBody);
-        return "redirect:/";
+        DeepSkyBody bodyCreated = deepSkyBodyService.addNewBody(deepSkyBody);
+        return "redirect:/updateBody/" + deepSkyBody.getId();
     }
 
     @PostMapping("/updateExistingDeepSkyBody")
     public String updateExistingDeepSkyBody(@ModelAttribute("deepSkyBody") DeepSkyBody deepSkyBody) {
-        deepSkyBodyService.updateDeepSkyBody(deepSkyBody);
-
-        // TODO - Update Elastic
-//        bodySearchRepository.save(deepSkyBody);
-        return "redirect:/";
+        DeepSkyBody updatedBody = deepSkyBodyService.updateDeepSkyBody(deepSkyBody);
+        return "redirect:/updateBody/" + updatedBody.getId();
     }
 
-    @GetMapping("/showFormForUpdate/{id}")
-    public String showFormForUpdate(@PathVariable( value = "id") long id, Model model) {
+    @GetMapping("/updateBody/{id}")
+    public String updateBody(@PathVariable( value = "id") long id, Model model) {
         DeepSkyBody deepSkyBody = deepSkyBodyService.getDeepSkyBody(id).orElseThrow();
 
         // set deepSkyBody as a model attribute to pre-populate the form
@@ -177,13 +172,8 @@ public class FrontendController {
     @PostMapping("/smartSearch")
     public String smartSearchPostMapping(String searchPhrase, Model model) {
         // TODO - Add ?searchPhrase URL parameter
-        logger.info("inside of postmapping, searchPhrase = " + searchPhrase);
         List<DeepSkyBody> searchResults = deepSkyBodyService.mainSearchDeepSkyBody(searchPhrase);
 
-        logger.info("searchResults for smartSearch has numberOfResults = " + searchResults.size());
-        logger.info("searchResults for smartSearch has numberOfResults = " + searchResults.size());
-        logger.info("searchResults for smartSearch has numberOfResults = " + searchResults.size());
-        logger.info("searchResults for smartSearch has numberOfResults = " + searchResults.size());
         logger.info("searchResults for smartSearch has numberOfResults = " + searchResults.size());
 
         model.addAttribute("searchPhraseString", searchPhrase);

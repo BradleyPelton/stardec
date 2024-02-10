@@ -3,7 +3,6 @@
 
 
 ### TODO (current)
-- Zero Search Results text
 - Re-enable security
 - "updated body successfully" popup
 - "created body successfully" popup

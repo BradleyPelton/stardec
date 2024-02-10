@@ -21,8 +21,13 @@
   <hr>
   <h2>Create Deep Sky Body</h2>
 
-  <form action="#" th:action="@{/addNewDeepSkyBody}" th:object="${deepSkyBody}"
-        method="POST">
+  <form
+        onsubmit="alert('Deep Sky Body Created Successfully')"
+        action="#"
+        th:action="@{/addNewDeepSkyBody}"
+        th:object="${deepSkyBody}"
+        method="POST"
+  >
     <a>Body Name</a>
     <input type="text" th:field="*{bodyName}" placeholder="Body Name" class="form-control mb-4 col-4" required>
     <a>Other Name(optional)</a>
