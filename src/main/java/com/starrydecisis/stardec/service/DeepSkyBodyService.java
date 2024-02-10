@@ -85,35 +85,7 @@ public class DeepSkyBodyService {
         deepSkyBodyRepository.save(newBody);
         logger.info("deepSkyBody bodyName=" + newBody.getBodyName() + " created and persisted");
 
-        // TODO - Update Elasticsearch
-
-
-        // MANUAL INDEXING
-//        try {
-////            final CreateIndexRequest createIndexRequest = new CreateIndexRequest("deepskybodyindex");
-////        createIndexRequest.alias(new Alias("links").writeIndex(true));
-////            client.indices().create(createIndexRequest, RequestOptions.DEFAULT);
-////            client.index(createIndexRequest, RequestOptions.DEFAULT)
-//
-//            Map<String, Object> jsonMap = new HashMap<>();
-//            jsonMap.put("feature", "high-level-rest-client");
-//            jsonMap.put("user", "kimchy");
-//            jsonMap.put("postDate", new Date());
-//            jsonMap.put("message", "trying out Elasticsearch");
-//
-//            IndexRequest request = new IndexRequest("spring-data")   // shardId
-////                    .id(String.valueOf(UUID.randomUUID()))           // id for index
-//                    .id(newBody.getId().toString())           // id for index
-//                    .source(jsonMap)                                //
-//                    .setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
-//
-//            IndexResponse response = client.index(request,RequestOptions.DEFAULT);
-////            System.out.println(response.status());
-////            System.out.println(response.toString());
-//        } catch (IOException e) {
-//            System.out.println("IO EXCEPTION DURING addNewBody");
-//            e.printStackTrace();
-//        }
+        bodySearchRepository.save(newBody);
     }
 
     public void deleteDeepSkyBody(Long bodyId) {
@@ -123,7 +95,7 @@ public class DeepSkyBodyService {
         } else {
             DeepSkyBody body = deepSkyBodyRepository.getById(bodyId);
             deepSkyBodyRepository.delete(body);
-            bodySearchRepository.delete(body);  // UNTESTED, should flow through
+            bodySearchRepository.deleteById(bodyId);  // .delete() doesn't work, but .deleteById() does. Hmmmmmm
         }
     }
 
@@ -136,7 +108,7 @@ public class DeepSkyBodyService {
             throw new IllegalStateException("Cannot update body with bodyName = " + apiBody.getBodyName() + " , bodyName does not exist");
         } else {
 
-            deepSkyBodyRepository.updateDeepSkyBodyByBodyName(
+            deepSkyBodyRepository.updateDeepSkyBodyByBodyName( // TODO - BUG. Update is creating a second document.
                     apiBody.getBodyName(),
                     apiBody.getOtherName(),
                     apiBody.getBodyType(),
@@ -144,13 +116,7 @@ public class DeepSkyBodyService {
                     apiBody.getDescription(),
                     apiBody.getNotes()
             );
-
-
-//            DeepSkyBody databaseBody = bodyOptional.get();
-//            databaseBody.setBodyName(apiBody.getBodyName());
-//            databaseBody.setBodyType(apiBody.getBodyType());
-//
-//            bodySearchRepository.save(databaseBody);  // UNTESTED, should flow through
+            bodySearchRepository.save(apiBody);
         }
     }
 
@@ -210,42 +176,10 @@ public class DeepSkyBodyService {
 
 
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////     THYMLELEAF STUFF BELOW    //////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-//    /// THYMLELEAF STUFF BELOW
-//    public void saveDeepSkyBody(DeepSkyBody deepSkyBody) {
-//
-//        // TODO -  DUPLICATE OF addNewBody method?
-//        // Should the frontend have its own method?
-//
-//        deepSkyBodyRepository.save(deepSkyBody);
-//        bodySearchRepository.save(deepSkyBody);
-//    }
-
-    /// THYMLELEAF STUFF BELOW
-    public DeepSkyBody getDeepSkyBodyById(Long id) {
-        Optional<DeepSkyBody> optional = deepSkyBodyRepository.findById(id);
-        DeepSkyBody body = null;
-        if (optional.isPresent()) {
-            body = optional.get();
-        } else {
-            throw new RuntimeException("DeepSkyBody not found for id = " + id);
-        }
-        return body;
-    }
-    /// THYMLELEAF STUFF BELOW
-    public void deleteDeepSkyBodyById(Long id) {
-        Optional<DeepSkyBody> optional = deepSkyBodyRepository.findById(id);
-        DeepSkyBody body = null;
-        if (optional.isPresent()) {
-            body = optional.get();
-            deepSkyBodyRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("DeepSkyBody not found for id = " + id);
-        }
-    }
-
-    /// THYMLELEAF STUFF BELOW
     public Page<DeepSkyBody> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name())
                 ? Sort.by(sortField).ascending()

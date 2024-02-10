@@ -139,7 +139,5 @@ public class DeepSkyBodyController {
 //        final List<DeepSkyBody> links = result.getSearchHits().stream().map(SearchHit::getContent).collect(Collectors.toList());
 //        return links;
 //    }
-
-
 }
 

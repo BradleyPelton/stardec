@@ -24,7 +24,7 @@ public interface DeepSkyBodyRepository extends JpaRepository<DeepSkyBody,Long> {
 
     Optional<DeepSkyBody> findDeepSkyBodyByBodyName(String bodyName);
 
-//    Explicit JPQL Query (works). Note: TableName not table_name
+//    Explicit JPQL Query (works). Note: "TableName" not "table_name"
 //    @Query("select d from DeepSkyBody d where d.constellation = ?1")
     List<DeepSkyBody> findDeepSkyBodiesByConstellation(String constellation);
 

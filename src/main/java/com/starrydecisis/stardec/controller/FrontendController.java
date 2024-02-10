@@ -126,7 +126,7 @@ public class FrontendController {
 
     @GetMapping("/showFormForUpdate/{id}")
     public String showFormForUpdate(@PathVariable( value = "id") long id, Model model) {
-        DeepSkyBody deepSkyBody = deepSkyBodyService.getDeepSkyBodyById(id);
+        DeepSkyBody deepSkyBody = deepSkyBodyService.getDeepSkyBody(id).orElseThrow();
 
         // set deepSkyBody as a model attribute to pre-populate the form
         model.addAttribute("deepSkyBody", deepSkyBody);
@@ -135,7 +135,7 @@ public class FrontendController {
 
     @GetMapping("/deleteDeepSkyBody/{id}")
     public String deleteDeepSkyBody(@PathVariable (value = "id") long id) {
-        deepSkyBodyService.deleteDeepSkyBodyById(id);
+        deepSkyBodyService.deleteDeepSkyBody(id);
         return "redirect:/";
     }
 
