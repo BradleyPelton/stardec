@@ -122,6 +122,7 @@ public class DeepSkyBodyService {
 
     public List<DeepSkyBody> mainSearchDeepSkyBody(
             @RequestParam(name = "searchPhrase", required = true) final String searchPhrase) {
+        logger.debug("searchPhrase inside mainSearch = " + searchPhrase);
         // The main search query for DeepSkyBodies is going to have to lower the relevance of the description field.
         // The description field mentions neighboring stars/galaxies by name. I need to boost id and lower description
 

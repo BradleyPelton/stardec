@@ -15,8 +15,8 @@ public interface BodySearchRepository extends ElasticsearchRepository<DeepSkyBod
 
 //    Page<Article> findByAuthorsName(String name, Pageable pageable);
 
-    @Query("{\"multi_match\": {\"query\": \"?0\",\"fields\": []}}")
-    Page<DeepSkyBody> dumbSearchDeepSkyBody(String searchPhrase, Pageable pageable);
+//    @Query("{\"multi_match\": {\"query\": \"?0\",\"fields\": []}}")
+//    Page<DeepSkyBody> dumbSearchDeepSkyBody(String searchPhrase, Pageable pageable);
     // Search all fields for any possible match (hence dumb)
 //    GET /deepskybodyindex/_search
 //    {

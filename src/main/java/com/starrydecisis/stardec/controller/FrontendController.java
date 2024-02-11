@@ -169,14 +169,12 @@ public class FrontendController {
         return "index";
     }
 
-    @PostMapping("/smartSearch")
-    public String smartSearchPostMapping(String searchPhrase, Model model) {
-        // TODO - Add ?searchPhrase URL parameter
+    @GetMapping("/smartSearch")
+    public String smartSearchPostMapping(@RequestParam("searchPhrase") String searchPhrase, Model model) {
+        logger.info("searchPhrase = " + searchPhrase);
         List<DeepSkyBody> searchResults = deepSkyBodyService.mainSearchDeepSkyBody(searchPhrase);
-
         logger.info("searchResults for smartSearch has numberOfResults = " + searchResults.size());
 
-        model.addAttribute("searchPhraseString", searchPhrase);
         model.addAttribute("bodyList", searchResults);
         model.addAttribute("bodyListSize", searchResults.size());
         return "body_search_results";

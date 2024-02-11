@@ -103,11 +103,11 @@ public class DeepSkyBodyController {
     }
 
 
-    // working
-    @GetMapping("/getAllSearch")
-    public Page<DeepSkyBody> dumbSearchDeepSkyBody() {
-        return bodySearchRepository.findAll(PageRequest.of(0, 10));  // works
-    }
+//     working
+//    @GetMapping("/getAllSearch")
+//    public Page<DeepSkyBody> dumbSearchDeepSkyBody() {
+//        return bodySearchRepository.findAll(PageRequest.of(0, 10));  // works
+//    }
 
     // working
     @GetMapping("/getBody")   // redundant? JPA repo already has a search by body Name
@@ -116,10 +116,10 @@ public class DeepSkyBodyController {
     }
 
     // working
-    @GetMapping("/dumbSearch")
-    public Page<DeepSkyBody> dumbSearchDeepSkyBody(@RequestParam(name = "searchPhrase", required = true) final String searchPhrase) {
-        return bodySearchRepository.dumbSearchDeepSkyBody(searchPhrase, PageRequest.of(0, 10));
-    }
+//    @GetMapping("/dumbSearch")
+//    public Page<DeepSkyBody> dumbSearchDeepSkyBody(@RequestParam(name = "searchPhrase", required = true) final String searchPhrase) {
+//        return bodySearchRepository.dumbSearchDeepSkyBody(searchPhrase, PageRequest.of(0, 10));
+//    }
 
 //    @GetMapping("/smartSearch")
 //    public List<DeepSkyBody> mainSearchDeepSkyBody(

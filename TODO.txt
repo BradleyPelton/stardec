@@ -4,9 +4,6 @@
 
 ### TODO (current)
 - Re-enable security
-- "updated body successfully" popup
-- "created body successfully" popup
-- TODO - Add ?searchPhrase URL parameter
 
 
 ### TODO (old)
