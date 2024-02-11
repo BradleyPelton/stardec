@@ -25,11 +25,10 @@
     <h3><u>Search</u></h3>
     <ul>
         <li>"Smart search"/Full-text Search with Elasticsearch</li>
-        <li>Try searching for Andromeda, Polaris, Hercules, 3C 249.1, etc.</li>
+        <li>Try searching for "Andromeda", "Polaris", "Hercules", "3C 249.1", etc.</li>
     </ul>
 
     <div border="1" class="container-fluid">
-<!--        <form action="#" th:action="@{/smartSearch/}" th:object="${searchPhrase}"-->
         <form
             action="#"
             th:action="@{/smartSearch(searchPhrase=${searchPhrase})}"

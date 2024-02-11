@@ -33,11 +33,12 @@
                 <li><a href="/newBody" class="nav-link px-2 text-white">Add New Body</a></li>
 
                 <li>
-                    <form action="#" th:action="@{/smartSearch/}" th:object="${searchPhrase}"
-                          method="POST">
-                        <input type="text" name="searchPhrase" required>
+                    <form
+                            action="#"
+                            th:action="@{/smartSearch(searchPhrase=${searchPhrase})}"
+                            method="GET">
+                        <input th:value="*{searchPhrase}" type="text" name="searchPhrase" required>
                         <input type="submit" value="Search">
-                        <!--            <button class="btn btn-dark btn-outline-success" type="submit">Search</button>-->
                     </form>
                 </li>
 
