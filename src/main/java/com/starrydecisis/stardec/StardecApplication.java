@@ -17,8 +17,12 @@ import java.util.Arrays;
 
 
 @SpringBootApplication
-@EnableJpaRepositories(excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ElasticsearchRepository.class))
-@EnableElasticsearchRepositories(includeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ElasticsearchRepository.class))
+@EnableJpaRepositories(
+        excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ElasticsearchRepository.class)
+)
+@EnableElasticsearchRepositories(
+        includeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, value = ElasticsearchRepository.class)
+)
 public class StardecApplication {
 
 	private static final Logger logger = LoggerFactory.getLogger(StardecApplication.class);
